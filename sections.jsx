@@ -553,15 +553,34 @@ function Future() {
 // ─── CONTACT ───────────────────────────────────────────────────────────────
 function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({
-    name: "", company: "", role: "founder-ceo", stage: "550k-1",
+    name: "", company: "", email: "", role: "founder-ceo", stage: "550k-1",
     intent: "awareness", budget: "50-100", message: ""
   });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 6000);
+    if (sending) return;
+    setError("");
+    setSending(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || "Something went wrong.");
+      setSubmitted(true);
+      setForm((f) => ({ ...f, name: "", company: "", email: "", message: "" }));
+      setTimeout(() => setSubmitted(false), 6000);
+    } catch (err) {
+      setError(err.message || "Could not send. Please email us directly.");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -589,6 +608,10 @@ function Contact() {
                   <label htmlFor="f-company">Brand or company</label>
                   <input id="f-company" required value={form.company} onChange={set("company")} placeholder="Your brand" />
                 </div>
+              </div>
+              <div className="field">
+                <label htmlFor="f-email">Email</label>
+                <input id="f-email" type="email" required value={form.email} onChange={set("email")} placeholder="you@yourbrand.com" />
               </div>
               <div className="row">
                 <div className="field">
@@ -638,12 +661,13 @@ function Contact() {
               </div>
 
               <div className="submit-row">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary" disabled={sending}>
                   <span className="dot"></span>
-                  Send it over
+                  {sending ? "Sending…" : "Send it over"}
                   <span className="arr"><ArrowNE /></span>
                 </button>
                 {submitted && <span className="ok">Got it. Talk soon.</span>}
+                {error && <span className="ok" style={{ color: "#FF0A54" }}>{error}</span>}
               </div>
             </form>
           </div>
