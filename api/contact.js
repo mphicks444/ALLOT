@@ -2,9 +2,14 @@
 // creates a row in the Notion "Contacts" CRM database.
 //
 // Required environment variables (set in Vercel → Settings → Environment Variables):
-//   NOTION_TOKEN  - Notion internal integration secret (starts with ntn_ / secret_)
-//   NOTION_DB_ID  - the Contacts database id
-// NOTION_DB_ID falls back to the known database id if the env var is absent.
+//   NOTION_TOKEN   - Notion internal integration secret (starts with ntn_ / secret_)
+//   NOTION_DB_ID   - the Contacts database id (optional; falls back to the known id)
+//
+// Optional email notification (only sends if RESEND_API_KEY is set):
+//   RESEND_API_KEY - Resend API key (re_...)
+//   NOTIFY_EMAIL   - where to send the "new lead" notification (your inbox)
+//   RESEND_FROM    - from address (defaults to onboarding@resend.dev for quick start;
+//                    set to a verified-domain address once you verify one in Resend)
 
 const FALLBACK_DB_ID = "f2ab3c31-c9c4-434b-a16f-3a50c5509648";
 const NOTION_VERSION = "2022-06-28";
@@ -39,6 +44,51 @@ const BUDGET_LABELS = {
 
 const label = (map, v) => map[v] || v || "—";
 const clip = (s, n) => String(s == null ? "" : s).slice(0, n);
+const esc = (s) => String(s == null ? "" : s)
+  .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+// Sends a "new lead" email via Resend. No-op (and never throws) if not configured.
+async function sendNotification(d) {
+  const key = process.env.RESEND_API_KEY;
+  const to = process.env.NOTIFY_EMAIL;
+  if (!key || !to) return; // email is optional — skip silently if unconfigured
+  const from = process.env.RESEND_FROM || "ALLOT Website <onboarding@resend.dev>";
+
+  const rows = [
+    ["Name", d.name],
+    ["Company", d.company],
+    ["Email", d.email],
+    ["Role", d.roleLabel],
+    ["Stage", d.stageLabel],
+    ["Intent", d.intentLabel],
+    ["Budget", d.budgetLabel],
+  ].map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;color:#888">${k}</td><td style="padding:4px 0"><strong>${esc(v || "—")}</strong></td></tr>`).join("");
+
+  const html =
+    `<div style="font-family:-apple-system,Segoe UI,sans-serif;font-size:15px;color:#161018">` +
+    `<h2 style="margin:0 0 12px">New lead from the ALLOT website</h2>` +
+    `<table style="border-collapse:collapse;margin-bottom:16px">${rows}</table>` +
+    `<div style="color:#888;margin-bottom:4px">Message</div>` +
+    `<div style="white-space:pre-wrap;border-left:3px solid #FF0A54;padding-left:12px">${esc(d.message)}</div>` +
+    `<p style="color:#888;margin-top:20px;font-size:13px">Also saved to your Notion Contacts CRM.</p></div>`;
+
+  try {
+    const r = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from,
+        to: to.split(",").map((s) => s.trim()),
+        reply_to: d.email || undefined,
+        subject: `New lead: ${d.name}${d.company ? " — " + d.company : ""}`,
+        html,
+      }),
+    });
+    if (!r.ok) console.error("Resend error", r.status, await r.text());
+  } catch (err) {
+    console.error("Resend send failed", err);
+  }
+}
 
 module.exports = async (req, res) => {
   if (req.method !== "POST") {
@@ -108,6 +158,10 @@ module.exports = async (req, res) => {
       console.error("Notion API error", r.status, detail);
       return res.status(502).json({ ok: false, error: "Could not save to Notion." });
     }
+
+    // Optional: email notification. Fires only if configured; never blocks the
+    // success response (the Notion row is the source of truth).
+    await sendNotification({ name, company, email, roleLabel, stageLabel, intentLabel, budgetLabel, message });
 
     return res.status(200).json({ ok: true });
   } catch (err) {
