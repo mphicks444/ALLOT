@@ -13,6 +13,7 @@
 
 const FALLBACK_DB_ID = "f2ab3c31-c9c4-434b-a16f-3a50c5509648";
 const NOTION_VERSION = "2022-06-28";
+const BOOKING_URL = "https://calendly.com/hi-weareallot/30min";
 
 // Map the form's stored values to the human-readable labels shown in the UI.
 const ROLE_LABELS = {
@@ -47,46 +48,77 @@ const clip = (s, n) => String(s == null ? "" : s).slice(0, n);
 const esc = (s) => String(s == null ? "" : s)
   .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-// Sends a "new lead" email via Resend. No-op (and never throws) if not configured.
-async function sendNotification(d) {
-  const key = process.env.RESEND_API_KEY;
-  const to = process.env.NOTIFY_EMAIL;
-  if (!key || !to) return; // email is optional — skip silently if unconfigured
-  const from = process.env.RESEND_FROM || "ALLOT Website <onboarding@resend.dev>";
-
-  const rows = [
-    ["Name", d.name],
-    ["Company", d.company],
-    ["Email", d.email],
-    ["Role", d.roleLabel],
-    ["Stage", d.stageLabel],
-    ["Intent", d.intentLabel],
-    ["Budget", d.budgetLabel],
-  ].map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;color:#888">${k}</td><td style="padding:4px 0"><strong>${esc(v || "—")}</strong></td></tr>`).join("");
-
-  const html =
-    `<div style="font-family:-apple-system,Segoe UI,sans-serif;font-size:15px;color:#161018">` +
-    `<h2 style="margin:0 0 12px">New lead from the ALLOT website</h2>` +
-    `<table style="border-collapse:collapse;margin-bottom:16px">${rows}</table>` +
-    `<div style="color:#888;margin-bottom:4px">Message</div>` +
-    `<div style="white-space:pre-wrap;border-left:3px solid #FF0A54;padding-left:12px">${esc(d.message)}</div>` +
-    `<p style="color:#888;margin-top:20px;font-size:13px">Also saved to your Notion Contacts CRM.</p></div>`;
-
+// Low-level Resend send. Best-effort: logs but never throws.
+async function resendSend(key, payload) {
   try {
     const r = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        from,
-        to: to.split(",").map((s) => s.trim()),
-        reply_to: d.email || undefined,
-        subject: `New lead: ${d.name}${d.company ? " — " + d.company : ""}`,
-        html,
-      }),
+      body: JSON.stringify(payload),
     });
     if (!r.ok) console.error("Resend error", r.status, await r.text());
   } catch (err) {
     console.error("Resend send failed", err);
+  }
+}
+
+// Sends (1) a "new lead" alert to the team and (2) a confirmation to the lead.
+// No-op (and never throws) if not configured. Email is optional — the Notion
+// row is the source of truth.
+async function sendNotification(d) {
+  const key = process.env.RESEND_API_KEY;
+  const team = process.env.NOTIFY_EMAIL;
+  if (!key) return;
+  const from = process.env.RESEND_FROM || "ALLOT Website <onboarding@resend.dev>";
+
+  // (1) Internal alert to the team.
+  if (team) {
+    const rows = [
+      ["Name", d.name],
+      ["Company", d.company],
+      ["Email", d.email],
+      ["Role", d.roleLabel],
+      ["Stage", d.stageLabel],
+      ["Intent", d.intentLabel],
+      ["Budget", d.budgetLabel],
+    ].map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;color:#888">${k}</td><td style="padding:4px 0"><strong>${esc(v || "—")}</strong></td></tr>`).join("");
+
+    const html =
+      `<div style="font-family:-apple-system,Segoe UI,sans-serif;font-size:15px;color:#161018">` +
+      `<h2 style="margin:0 0 12px">New lead from the ALLOT website</h2>` +
+      `<table style="border-collapse:collapse;margin-bottom:16px">${rows}</table>` +
+      `<div style="color:#888;margin-bottom:4px">Message</div>` +
+      `<div style="white-space:pre-wrap;border-left:3px solid #FF0A54;padding-left:12px">${esc(d.message)}</div>` +
+      `<p style="color:#888;margin-top:20px;font-size:13px">Also saved to your Notion Contacts CRM.</p></div>`;
+
+    await resendSend(key, {
+      from,
+      to: team.split(",").map((s) => s.trim()),
+      reply_to: d.email || undefined,
+      subject: `New lead: ${d.name}${d.company ? " — " + d.company : ""}`,
+      html,
+    });
+  }
+
+  // (2) Confirmation to the person who submitted the form.
+  // Needs a verified sending domain (won't deliver while from = onboarding@resend.dev).
+  if (d.email) {
+    const first = (d.name || "there").split(" ")[0];
+    const html =
+      `<div style="font-family:-apple-system,Segoe UI,sans-serif;font-size:15px;color:#161018;line-height:1.6">` +
+      `<p>Hi ${esc(first)},</p>` +
+      `<p>Thanks for reaching out to <strong>ALLOT</strong> — we've received your inquiry and a member of our team will be in touch shortly.</p>` +
+      `<p>If you'd like to get a call on the books now, you can grab a time here:<br>` +
+      `<a href="${BOOKING_URL}" style="color:#FF0A54">${BOOKING_URL}</a></p>` +
+      `<p style="margin-top:24px">— The ALLOT team</p></div>`;
+
+    await resendSend(key, {
+      from,
+      to: [d.email],
+      reply_to: team ? team.split(",")[0].trim() : undefined,
+      subject: "We received your inquiry — ALLOT",
+      html,
+    });
   }
 }
 
