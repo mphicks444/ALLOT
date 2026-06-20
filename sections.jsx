@@ -551,6 +551,8 @@ function Future() {
 }
 
 // ─── CONTACT ───────────────────────────────────────────────────────────────
+const CALENDLY_URL = "https://calendly.com/hi-weareallot/30min";
+
 function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
@@ -574,8 +576,12 @@ function Contact() {
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) throw new Error(data.error || "Something went wrong.");
       setSubmitted(true);
-      setForm((f) => ({ ...f, name: "", company: "", email: "", message: "" }));
-      setTimeout(() => setSubmitted(false), 6000);
+      // Send them to Calendly to book a call, with name + email pre-filled.
+      const params = new URLSearchParams();
+      if (form.name) params.set("name", form.name);
+      if (form.email) params.set("email", form.email);
+      const bookingUrl = CALENDLY_URL + (params.toString() ? "?" + params.toString() : "");
+      setTimeout(() => { window.location.href = bookingUrl; }, 2000);
     } catch (err) {
       setError(err.message || "Could not send. Please email us directly.");
     } finally {
@@ -666,7 +672,7 @@ function Contact() {
                   {sending ? "Sending…" : "Send it over"}
                   <span className="arr"><ArrowNE /></span>
                 </button>
-                {submitted && <span className="ok">Got it. Talk soon.</span>}
+                {submitted && <span className="ok">Got it — taking you to book a call…</span>}
                 {error && <span className="ok" style={{ color: "#FF0A54" }}>{error}</span>}
               </div>
             </form>
