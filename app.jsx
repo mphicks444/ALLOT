@@ -25,7 +25,7 @@ function App() {
   }, [t.palette, t.displayFont, t.density, t.energy, t.accent]);
 
   React.useEffect(() => {
-    const ids = ["top", "threshold", "about", "mandates", "services", "principles", "contact"];
+    const ids = ["top", "threshold", "mandates", "services", "principles", "contact"];
     const obs = new IntersectionObserver(
       (entries) => {
         const visible = entries
@@ -50,7 +50,6 @@ function App() {
         <Hero />
         <Threshold />
         <MegaMarquee phrase={<>Dinners · <em>Pop-ups</em> · Retail · Partnerships · Community · Press</>} />
-        <About />
         <Mandates />
         <Services />
         <MegaMarquee variant="cobalt" reverse phrase={<>Proximity over <em>impressions</em> · Rooms over <em>reach</em> · Trust over <em>noise</em> ·</>} />
