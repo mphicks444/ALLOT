@@ -864,6 +864,16 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .svc .body { grid-column: 2 / -1; padding-top: 4px; }
   .nav-links .nav-link { display: none; }
   .hero-headline-wrap .ghost-mark { font-size: 48vw; opacity: 0.22; }
+  /* Mobile browsers (esp. iOS Safari) glitch/flicker rendering a sticky,
+     backdrop-blurred nav on top of the animated ticker/mega-marquee bars —
+     the blur has to be recomposited every frame the bar scrolls, so moving
+     text ghosts and stutters through it. Drop the blur and go solid below
+     desktop widths, where there's no animated content sitting under it. */
+  .nav {
+    background: var(--bg);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 @media (max-width: 600px) {
   .hero-meta { grid-template-columns: 1fr 1fr; }
