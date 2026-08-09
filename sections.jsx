@@ -3,37 +3,14 @@
 
 const { useEffect, useState, useRef } = React;
 
-// ─── ARROW ─────────────────────────────────────────────────────────────────
-// On-brand diagonal NE arrow. Inline SVG (not the ↗ glyph, which phones render
-// as a colored emoji). Uses currentColor so it inherits the color + the
-// hover-translate animation of whatever .arr / .arrow wrapper it sits in.
-function ArrowNE() {
-  return (
-    <svg
-      className="arr-svg"
-      viewBox="0 0 24 24"
-      width="1em"
-      height="1em"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      focusable="false">
-      <path d="M7 17 17 7" />
-      <path d="M8 7 H17 V16" />
-    </svg>);
-
-}
-
 // ─── NAV ───────────────────────────────────────────────────────────────────
 function Nav({ activeSection }) {
   const links = [
-  { id: "about", label: "Studio" },
+  { id: "top", label: "Studio" },
   { id: "mandates", label: "Who we serve" },
   { id: "services", label: "What we do" },
   { id: "principles", label: "Beliefs" },
+  { id: "careers", label: "Careers", href: "careers.html" },
   { id: "contact", label: "Say hi" }];
 
   return (
@@ -48,7 +25,7 @@ function Nav({ activeSection }) {
         <nav className="nav-links" aria-label="Primary">
           {links.map((l) =>
           <a key={l.id}
-          href={`#${l.id}`}
+          href={l.href || `#${l.id}`}
           className="nav-link"
           data-active={activeSection === l.id ? "true" : "false"}>
               {l.label}
@@ -56,7 +33,7 @@ function Nav({ activeSection }) {
           )}
         </nav>
         <a href="#contact" className="nav-cta">
-          Say hi <span className="arr"><ArrowNE /></span>
+          Say hi <span className="arr">↗</span>
         </a>
       </div>
     </header>);
@@ -66,15 +43,14 @@ function Nav({ activeSection }) {
 // ─── TICKER ────────────────────────────────────────────────────────────────
 function Ticker() {
   const items = [
-  "Strategic Experiences",
-  "Visibility & Distribution",
-  "Partnerships & BD",
-  "Brand Visibility Strategy",
+  "Experiential Marketing",
+  "Creative Direction for Campaigns",
+  "Content Strategy",
   "Category Presence",
-  "Food & Beverage",
-  "Beauty & Skincare",
-  "Health & Wellness",
-  "Recovery & Performance",
+  "Consumer & CPG",
+  "Fashion",
+  "Sport",
+  "Entertainment",
   "A screen reaches one sense. A room reaches all five.",
   "Sight · Sound · Taste · Touch · Scent",
   "Proximity over impressions",
@@ -117,34 +93,34 @@ function Hero() {
             <h1 className="monogram" aria-label="ALLOT">ALLOT</h1>
             <div className="monogram-labels">
               <span>ALLOT Studios</span>
-              <span>Growth · DTC &amp; CPG</span>
+              <span>Experience Studio</span>
             </div>
           </div>
 
           <nav className="hm-nav" aria-label="Statement">
-            <span style={{ fontSize: "clamp(19px, 5vw, 27px)" }}>When growth stalls, presence matters.</span>
+            <span style={{ fontSize: "27px", textTransform: "uppercase" }}>Most brands chase attention. We create attachment.</span>
           </nav>
 
           <div className="hm-statement">
-            <h2 className="hm-headline" style={{ fontSize: "clamp(26px, 6vw, 42px)" }}>
-              A growth studio for DTC and CPG brands with traction, building
-              <em> category presence</em> through strategic visibility.
+            <h2 className="hm-headline" style={{ fontSize: "42px" }}>
+              An experience studio creating branded environments and
+              experiential campaigns across <em>consumer, fashion, sport, and entertainment.</em>
             </h2>
           </div>
 
           <div className="hm-bio">
             <p>
-              We create strategic experiences, partnerships, and
-              growth-focused marketing that connect brands with the
-              influential communities, high-value audiences, and strategic
-              partners most important to their growth across culture,
-              business, and sport.
+              We are a culturally connected experience agency fueled by vivid
+              imagination, rigorous strategy, and a refusal to be boxed in. We
+              do not play it safe, and we do not do quiet. We fuse cultural
+              insight with flawless production execution to design tactical,
+              real-world experiences that completely reshape what is next.
             </p>
           </div>
 
           <div className="hm-cta">
             <a href="#contact" className="btn btn-dark">
-              Create with us <span className="arr"><ArrowNE /></span>
+              Let's vibe out <span className="arr">↗</span>
             </a>
           </div>
         </div>
@@ -163,12 +139,20 @@ function Threshold() {
         <div className="threshold-frame">
           <div className="eyebrow"><span className="dot"></span>The threshold · strategic filter</div>
           <p className="threshold-copy">
-            ALLOT partners with mid-market DTC and CPG brands scaling through
-            the <em>$3M–$12M+ ARR</em> corridor. This is the threshold where
-            proven demand is no longer enough, and stronger real-world
-            presence, community, partnerships, and strategic visibility become
-            essential for building <em>category presence</em> and reaching the
-            next stage of growth.
+            We partner with mid-market brands scaling through
+            the <em>critical $3M–$12M+ ARR</em> corridor.
+            <span className="tc-break">
+            </span>
+            <span className="tc-break">
+              Operating with absolute intentionality and always engineering
+              with the ultimate outcome in mind, we step in to turn baseline
+              market presence into absolute <em>category dominance.</em>
+            </span>
+            <span className="tc-break">
+              We construct the commanding physical footprints, amplified PR,
+              and strategic visibility required to shatter growth ceilings and
+              lock in your next tier of enterprise scale.
+            </span>
           </p>
           <div className="threshold-rule"></div>
           <div className="threshold-meta">
@@ -182,62 +166,11 @@ function Threshold() {
 
 }
 
-// ─── ABOUT / POSITIONING ───────────────────────────────────────────────────
-// ─── THESIS (Relational Proximity vs. Digital Noise) ──────────────────────
-function About() {
-  return (
-    <section id="about" className="section about">
-      <div className="container cols-12">
-        <div className="label">
-          <div className="eyebrow"><span className="dot"></span>01 · Thesis</div>
-        </div>
-        <div className="text">
-          <h2 className="h-section">
-            Relational <em>proximity</em><br />
-            vs. digital <em>saturation.</em>
-          </h2>
-          <p className="body-l" style={{ marginTop: 36 }}>
-            Growth stalls when the same paid media, the same audiences, and the
-            same creative no longer compound. When CAC rises and channel
-            efficiency softens, brands realize how much of their growth was
-            built on rented digital traffic, not owned presence.
-          </p>
-          <p className="body-l">
-            ALLOT creates strategic experiences and partnership ecosystems that
-            help brands move beyond digital saturation and build commercial
-            momentum in the rooms, communities, and conversations that shape
-            category demand.
-          </p>
-          <p className="senses-line">
-            A screen reaches <em>one sense.</em> A physical experience reaches <em>all five.</em>
-          </p>
-        </div>
-
-        <div className="pull">
-          <div className="num">¶</div>
-          <div className="body">
-            <p className="body-l" style={{ margin: 0 }}>
-              This is the threshold where a brand stops operating like an
-              emerging brand and starts behaving like a <em>category player.</em>
-               This is the layer that helps growth break through. This is what
-              makes a brand feel bigger, move bigger, and be perceived
-              differently.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>);
-
-}
-
 // ─── CATEGORIES (WHO WE SERVE) ─────────────────────────────────────────────
 const CATEGORIES = [
-  { name: "Food & Beverage",       desc: "Functional drinks, pantry, snacks, and better-for-you CPG." },
-  { name: "Health & Wellness",     desc: "Supplements, adaptogens, longevity, sexual wellness, and daily ritual brands." },
-  { name: "Beauty",                desc: "Color, fragrance, tools, and beauty brands with breakout potential." },
-  { name: "Skincare",              desc: "Clinical, botanical, derm-led, and modern skincare brands." },
-  { name: "Recovery & Performance", desc: "Sports nutrition, recovery, active lifestyle, and performance wellness." },
-  { name: "Home & Lifestyle",      desc: "Soft goods, home fragrance, pet, baby, and design-led consumer brands." },
+  { name: "Consumer Brands", desc: "Beauty, skincare, wellness, food, beverage, personal care, home, and emerging consumer categories." },
+  { name: "Fashion, Lifestyle and Performance", desc: "Fashion, fragrance, footwear, fitness, recovery, sports nutrition, and active lifestyle." },
+  { name: "Select Sports, Entertainment and Cultural Properties", desc: "Organizations seeking experiential concepts, audience engagement, strategic partnerships, and cultural visibility." },
 ];
 
 function Mandates() {
@@ -246,15 +179,15 @@ function Mandates() {
       <div className="container">
         <div className="head">
           <div>
-            <div className="eyebrow"><span className="dot"></span>02 · Who we serve</div>
+            <div className="eyebrow"><span className="dot"></span>02 · Who we create for</div>
             <h2 className="h-section" style={{ marginTop: 24 }}>
-              Built for <em>consumer</em><br />brands with traction.
+              Built for <em>brands</em><br />with traction.
             </h2>
           </div>
-          <p className="lede">
-            We focus on the categories where presence, community, and proximity
-            compound fastest, and where brands in the <em>$3M–$12M+ ARR</em>
-            range are ready to operate like category players.
+          <p className="lede" style={{ fontSize: 15 }}>
+            From experiential marketing, to creative direction, to content
+            strategy, we design experiences and stories that connect brands
+            with influential communities and turn attention into attachment.
           </p>
         </div>
 
@@ -290,30 +223,37 @@ function Mandates() {
 }
 
 // ─── SERVICES ──────────────────────────────────────────────────────────────
+const EXPERIENTIAL_COLUMNS = [
+{ label: "Strategy", items: ["Strategy + Insight"] },
+{ label: "Brand Experiences", items: ["Pop-ups", "Press + Influencers", "Brand Trips", "Global Toolkits", "Festivals"] },
+{ label: "Amplification", items: ["Influencer Mktg", "Mailers", "Merch", "Content", "OOH", "Sampling"] },
+{ label: "Retail", items: ["In-store Exp.", "Concept Stores"] },
+{ label: "Commercial Impact", items: ["Measurement + Results"] }];
+
+
 const SERVICES = [
 {
-  id: "experiences",
-  title: "Strategic Experiences",
-  body: "Hosted experiences, private dinners, launches, and brand environments designed to move a brand from being seen to being felt. Built to create proximity, deepen relevance, and shape how the market experiences the brand in real life.",
-  tags: ["Hosted experiences", "Private dinners", "Launches", "Salons", "Brand environments"]
+  id: "experiential",
+  title: "Experiential Marketing",
+  lead: "Full funnel activation, delivered end to end.",
+  body: "We plan, produce, and amplify the brand moments that turn attention into commercial results, covering strategy, the experience itself, retail, and everything that keeps working after the room clears.",
+  columns: EXPERIENTIAL_COLUMNS
 },
 {
-  id: "visibility-distribution",
-  title: "Visibility & Distribution",
-  body: "The systems that bring the brand and the moment into market. From event marketing and amplification to placements, paid support, and content surfaces, this is how visibility travels beyond the experience itself.",
-  tags: ["Amplification", "Placements", "Paid support", "Content surfaces", "Audience development"]
+  id: "creative-direction",
+  title: "Creative Direction for Campaigns",
+  lead: "A campaign is only as strong as the idea holding it together.",
+  body: "We shape the creative concept, look, and voice behind a campaign, then carry it consistently across every channel and touchpoint so the brand feels considered at every size.",
+  tagLabel: "Includes",
+  tags: ["Campaign Concepting", "Art Direction", "Brand Voice & Messaging", "Visual Systems", "Asset Direction", "Channel Adaptation"]
 },
 {
-  id: "partnerships",
-  title: "Partnerships & Business Development",
-  body: "Sponsorships, strategic partnerships, co-marketing, and outbound relationship-building designed to unlock leverage, adjacency, and commercial opportunity. This is where visibility starts opening doors.",
-  tags: ["Partnership strategy", "Sponsorship", "Co-marketing", "Outbound", "Strategic BD"]
-},
-{
-  id: "visibility",
-  title: "Brand Visibility Strategy",
-  body: "The connective tissue. We define where a brand should be seen, around whom, and in what context to strengthen market presence across cultural, commercial, and strategic audiences.",
-  tags: ["Positioning", "Visibility strategy", "Editorial", "PR strategy", "Cultural calendar"]
+  id: "content-strategy",
+  title: "Content Strategy",
+  lead: "Content should build a following, not just fill a calendar.",
+  body: "We define what a brand says, where it says it, and why it matters, then build a content approach that compounds audience and trust over time instead of chasing one off moments.",
+  tagLabel: "Includes",
+  tags: ["Content Pillars", "Editorial Planning", "Channel Strategy", "Creator Partnerships", "Performance Content", "Reporting & Insights"]
 }];
 
 
@@ -325,28 +265,49 @@ function Services() {
           <div>
             <div className="eyebrow"><span className="dot"></span>02 · What we do</div>
             <h2 className="h-section" style={{ marginTop: 24 }}>
-              Four things,<br />done <em>together.</em>
+              Three <em>distinct</em><br />services.
             </h2>
           </div>
           <p className="lede">
-            Each one stands on its own. Together, they turn visibility into
-            presence, presence into relevance, and relevance into commercial
-            momentum.
+            We design tailored visibility strategies around the audiences,
+            partnerships, and measurable outcomes that matter most to your
+            growth. Each of these three services stands on its own, and each
+            helps brands build familiarity, strengthen credibility, and create
+            lasting commercial opportunities.
           </p>
         </div>
 
         <div className="services-list">
           {SERVICES.map((s, i) =>
           <article className="svc" key={s.id} id={s.id}>
-              <div className="num">{String(i + 1).padStart(2, "0")} / 04</div>
+              <div className="num">{String(i + 1).padStart(2, "0")} / {String(SERVICES.length).padStart(2, "0")}</div>
               <h3 className="title">{s.title}</h3>
               <div className="body">
+                {s.lead && <p className="svc-lead">{s.lead}</p>}
                 <p style={{ margin: 0 }}>{s.body}</p>
-                <div className="tags">
-                  {s.tags.map((t) => <span key={t} className="tag">{t}</span>)}
-                </div>
+                {s.columns &&
+                <div className="svc-columns">
+                  {s.columns.map((c, ci) =>
+                  <div className="svc-col" key={c.label}>
+                    <div className="svc-col-head">
+                      <span className="svc-col-num">{String(ci + 1).padStart(2, "0")}</span>
+                      <span className="svc-col-label">{c.label}</span>
+                    </div>
+                    <ul className="svc-col-items">
+                      {c.items.map((it) => <li key={it}>{it}</li>)}
+                    </ul>
+                  </div>
+                  )}
+                </div>}
+                {s.tagLabel &&
+                <>
+                  <span className="tags-label">{s.tagLabel}</span>
+                  <div className="tags">
+                    {s.tags.map((t) => <span key={t} className="tag">{t}</span>)}
+                  </div>
+                </>}
               </div>
-              <div className="arrow"><ArrowNE /></div>
+              <div className="arrow">↗</div>
             </article>
           )}
         </div>
@@ -499,7 +460,7 @@ function Work() {
               <div className="title">{w.proj}</div>
               <div className="disc">{w.disc}</div>
               <div className="yr">{w.yr}</div>
-              <div className="arr"><ArrowNE /></div>
+              <div className="arr">↗</div>
             </article>
           )}
         </div>
@@ -551,42 +512,17 @@ function Future() {
 }
 
 // ─── CONTACT ───────────────────────────────────────────────────────────────
-const CALENDLY_URL = "https://calendly.com/hi-weareallot/30min";
-
 function Contact() {
   const [submitted, setSubmitted] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [error, setError] = useState("");
   const [form, setForm] = useState({
-    name: "", company: "", email: "", role: "founder-ceo", stage: "550k-1",
+    name: "", company: "", role: "founder-ceo", stage: "550k-1",
     intent: "awareness", budget: "50-100", message: ""
   });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    if (sending) return;
-    setError("");
-    setSending(true);
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.ok) throw new Error(data.error || "Something went wrong.");
-      setSubmitted(true);
-      // Send them to Calendly to book a call, with name + email pre-filled.
-      const params = new URLSearchParams();
-      if (form.name) params.set("name", form.name);
-      if (form.email) params.set("email", form.email);
-      const bookingUrl = CALENDLY_URL + (params.toString() ? "?" + params.toString() : "");
-      setTimeout(() => { window.location.href = bookingUrl; }, 2000);
-    } catch (err) {
-      setError(err.message || "Could not send. Please email us directly.");
-    } finally {
-      setSending(false);
-    }
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 6000);
   };
 
   return (
@@ -596,12 +532,13 @@ function Contact() {
           <div>
             <div className="eyebrow"><span className="dot"></span>06 · Say hi</div>
             <h2 className="h-section" style={{ marginTop: 24 }}>
-              Tell us what you're <em>building.</em>
+              Tell us the <em>vibes.</em>
             </h2>
             <p className="body-l" style={{ marginTop: 28, maxWidth: "44ch" }}>
-              We read every note. The right ones usually get a reply within the
-              week, often with questions and sometimes with introductions to
-              people we think you should already know.
+              After you submit, our Experience team reaches out to schedule a
+              call. Expect a reply within the week, often with questions,
+              sometimes with introductions to people we think you should
+              already know.
             </p>
 
             <form className="contact-form" onSubmit={onSubmit}>
@@ -614,10 +551,6 @@ function Contact() {
                   <label htmlFor="f-company">Brand or company</label>
                   <input id="f-company" required value={form.company} onChange={set("company")} placeholder="Your brand" />
                 </div>
-              </div>
-              <div className="field">
-                <label htmlFor="f-email">Email</label>
-                <input id="f-email" type="email" required value={form.email} onChange={set("email")} placeholder="you@yourbrand.com" />
               </div>
               <div className="row">
                 <div className="field">
@@ -667,43 +600,21 @@ function Contact() {
               </div>
 
               <div className="submit-row">
-                <button type="submit" className="btn btn-primary" disabled={sending}>
+                <button type="submit" className="btn btn-primary">
                   <span className="dot"></span>
-                  {sending ? "Sending…" : "Send it over"}
-                  <span className="arr"><ArrowNE /></span>
+                  Send it over
+                  <span className="arr">↗</span>
                 </button>
-                {submitted && <span className="ok">Got it — taking you to book a call…</span>}
-                {error && <span className="ok" style={{ color: "#FF0A54" }}>{error}</span>}
+                {submitted && <span className="ok">Got it. Talk soon.</span>}
               </div>
             </form>
           </div>
 
           <aside className="contact-side">
-            <div className="eyebrow"><span className="dot"></span>Currently open to</div>
-
-            <div className="engaging">
-              <div className="row">
-                <span className="key">01</span>
-                <span className="val">Founders building products with real traction and market pull.</span>
-              </div>
-              <div className="row">
-                <span className="key">02</span>
-                <span className="val">Brands ready to do real-world moments, not just posts.</span>
-              </div>
-              <div className="row">
-                <span className="key">03</span>
-                <span className="val">Partners with a great venue, gathering, audience, or strategic angle.</span>
-              </div>
-              <div className="row">
-                <span className="key">04</span>
-                <span className="val">Reporters, producers, and editors chasing stories we'd want our name near.</span>
-              </div>
-            </div>
-
-            <div className="channels" style={{ marginTop: 44 }}>
-              <a href="mailto:hi@allot.studio">hi@allot.studio</a>
-              <a href="mailto:work@allot.studio">work@allot.studio</a>
-              <a href="#" onClick={(e) => e.preventDefault()}>Press kit <span className="arr"><ArrowNE /></span></a>
+            <div className="channels">
+              <a href="mailto:hi@weareallot.com">hi@weareallot.com</a>
+              <a href="mailto:partnerships@weareallot.com">partnerships@weareallot.com</a>
+              <a href="mailto:hi@weareallot.com">Contact us ↗</a>
             </div>
           </aside>
         </div>
@@ -725,26 +636,26 @@ function Footer() {
           <div className="col">
             <h4>Studio</h4>
             <ul>
-              <li><a href="#about">About</a></li>
+              <li><a href="#top">About</a></li>
               <li><a href="#mandates">Who we serve</a></li>
               <li><a href="#principles">Beliefs</a></li>
+              <li><a href="careers.html">Careers</a></li>
               <li><a href="#contact">Say hi</a></li>
             </ul>
           </div>
           <div className="col">
             <h4>What we do</h4>
             <ul>
-              <li><a href="#experiences">Strategic Experiences</a></li>
-              <li><a href="#visibility-distribution">Visibility &amp; Distribution</a></li>
-              <li><a href="#partnerships">Partnerships &amp; BD</a></li>
-              <li><a href="#visibility">Brand Visibility Strategy</a></li>
+              <li><a href="#experiential">Experiential Marketing</a></li>
+              <li><a href="#creative-direction">Creative Direction for Campaigns</a></li>
+              <li><a href="#content-strategy">Content Strategy</a></li>
             </ul>
           </div>
           <div className="col">
             <h4>Say hi</h4>
             <ul>
-              <li><a href="mailto:hi@allot.studio">hi@allot.studio</a></li>
-              <li><a href="mailto:work@allot.studio">work@allot.studio</a></li>
+              <li><a href="mailto:hi@weareallot.com">hi@weareallot.com</a></li>
+              <li><a href="mailto:partnerships@weareallot.com">partnerships@weareallot.com</a></li>
               <li><a href="#">Global · Working internationally</a></li>
             </ul>
           </div>
@@ -759,6 +670,6 @@ function Footer() {
 }
 
 Object.assign(window, {
-  Nav, Ticker, MegaMarquee, Hero, Threshold, About, Mandates, Services,
+  Nav, Ticker, MegaMarquee, Hero, Threshold, Mandates, Services,
   Principles, Future, Contact, Footer
 });
