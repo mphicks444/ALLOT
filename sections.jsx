@@ -9,7 +9,7 @@ function Nav({ activeSection }) {
   { id: "top", label: "Studio" },
   { id: "mandates", label: "Who we serve" },
   { id: "services", label: "What we do" },
-  { id: "principles", label: "Beliefs" },
+  { id: "principles", label: "Process" },
   { id: "careers", label: "Careers", href: "careers.html" },
   { id: "contact", label: "Say hi" }];
 
@@ -44,8 +44,7 @@ function Nav({ activeSection }) {
 function Ticker() {
   const items = [
   "Experiential Marketing",
-  "Creative Direction for Campaigns",
-  "Content Strategy",
+  "Creative Campaign Direction",
   "Category Presence",
   "Consumer & CPG",
   "Fashion",
@@ -98,19 +97,19 @@ function Hero() {
           </div>
 
           <nav className="hm-nav" aria-label="Statement">
-            <span style={{ fontSize: "27px", textTransform: "uppercase" }}>Most brands chase attention. We create attachment.</span>
+            <span style={{ fontSize: "20px", textTransform: "uppercase" }}>Most brands chase attention. We create attachment.</span>
           </nav>
 
           <div className="hm-statement">
             <h2 className="hm-headline" style={{ fontSize: "42px" }}>
-              An experience studio creating branded environments and
-              experiential campaigns across <em>consumer, fashion, sport, and entertainment.</em>
+              We design and produce unique brand experiences across <em>CPG, sport, and entertainment.</em>
             </h2>
           </div>
 
           <div className="hm-bio">
             <p>
-              We are a culturally connected experience agency fueled by vivid
+              We are a culturally connected Growth and Experiential Studio
+              fueled by vivid
               imagination, rigorous strategy, and a refusal to be boxed in. We
               do not play it safe, and we do not do quiet. We fuse cultural
               insight with flawless production execution to design tactical,
@@ -139,7 +138,7 @@ function Threshold() {
         <div className="threshold-frame">
           <div className="eyebrow"><span className="dot"></span>The threshold · strategic filter</div>
           <p className="threshold-copy">
-            We partner with mid-market brands scaling through
+            For mid-market brands scaling through
             the <em>critical $3M–$12M+ ARR</em> corridor.
             <span className="tc-break">
             </span>
@@ -149,9 +148,6 @@ function Threshold() {
               market presence into absolute <em>category dominance.</em>
             </span>
             <span className="tc-break">
-              We construct the commanding physical footprints, amplified PR,
-              and strategic visibility required to shatter growth ceilings and
-              lock in your next tier of enterprise scale.
             </span>
           </p>
           <div className="threshold-rule"></div>
@@ -168,39 +164,48 @@ function Threshold() {
 
 // ─── CATEGORIES (WHO WE SERVE) ─────────────────────────────────────────────
 const CATEGORIES = [
-  { name: "Consumer Brands", desc: "Beauty, skincare, wellness, food, beverage, personal care, home, and emerging consumer categories." },
-  { name: "Fashion, Lifestyle and Performance", desc: "Fashion, fragrance, footwear, fitness, recovery, sports nutrition, and active lifestyle." },
-  { name: "Select Sports, Entertainment and Cultural Properties", desc: "Organizations seeking experiential concepts, audience engagement, strategic partnerships, and cultural visibility." },
+  { name: "CPG Brands", desc: "Food and beverage, beauty, health and wellness, supplements, personal care, home, baby, pet, and emerging consumer categories.", detail: ["Food & Beverage", "Functional Drinks", "Snacks & Pantry", "Beauty & Color", "Skincare", "Fragrance", "Health & Wellness", "Supplements", "Recovery & Sports Nutrition", "Personal Care", "Baby & Family", "Pet", "Home & Household"] },
+  { name: "Lifestyle and Performance", desc: "Fashion, fragrance, footwear, fitness, recovery, sports nutrition, and active lifestyle.", detail: ["Apparel & Ready-to-Wear", "Footwear", "Accessories & Jewelry", "Streetwear", "Activewear", "Fitness & Training", "Recovery", "Sports Nutrition", "Outdoor & Adventure", "Travel & Hospitality", "Design & Interiors"] },
+  { name: "Select Sports, Entertainment and Cultural Properties", desc: "Organizations seeking experiential concepts, audience engagement, strategic partnerships, and cultural visibility.", detail: ["Teams & Leagues", "Athletes & Talent", "Music & Touring", "Festivals", "Film & TV", "Gaming & Esports", "Media & Publishers", "Arts & Museums", "Nightlife & Venues", "Membership & Community"] },
 ];
 
 function Mandates() {
+  const [openCat, setOpenCat] = React.useState(null);
   return (
     <section id="mandates" className="section categories">
       <div className="container">
         <div className="head">
           <div>
-            <div className="eyebrow"><span className="dot"></span>02 · Who we create for</div>
+            <div className="eyebrow"><span className="dot"></span>01 · Who we create for</div>
             <h2 className="h-section" style={{ marginTop: 24 }}>
               Built for <em>brands</em><br />with traction.
             </h2>
           </div>
           <p className="lede" style={{ fontSize: 15 }}>
-            From experiential marketing, to creative direction, to content
-            strategy, we design experiences and stories that connect brands
-            with influential communities and turn attention into attachment.
           </p>
         </div>
 
         <div className="cats-layout">
           <div className="cats">
             {CATEGORIES.map((c, i) => (
-              <div className="cat" key={c.name}>
+              <button
+                type="button"
+                className={"cat" + (openCat === i ? " is-open" : "")}
+                key={c.name}
+                aria-expanded={openCat === i}
+                onClick={() => setOpenCat(openCat === i ? null : i)}
+              >
                 <span className="num">{String(i + 1).padStart(2, "0")}</span>
                 <div>
                   <span className="cat-name">{c.name}</span>
-                  <span className="cat-desc">{c.desc}</span>
+                  <div className="cat-detail">
+                    <ul>
+                      {c.detail.map((d) => <li key={d}>{d}</li>)}
+                    </ul>
+                  </div>
                 </div>
-              </div>
+                <span className="cat-toggle" aria-hidden="true">+</span>
+              </button>
             ))}
           </div>
 
@@ -241,19 +246,11 @@ const SERVICES = [
 },
 {
   id: "creative-direction",
-  title: "Creative Direction for Campaigns",
+  title: "Creative Campaign Direction",
   lead: "A campaign is only as strong as the idea holding it together.",
   body: "We shape the creative concept, look, and voice behind a campaign, then carry it consistently across every channel and touchpoint so the brand feels considered at every size.",
   tagLabel: "Includes",
   tags: ["Campaign Concepting", "Art Direction", "Brand Voice & Messaging", "Visual Systems", "Asset Direction", "Channel Adaptation"]
-},
-{
-  id: "content-strategy",
-  title: "Content Strategy",
-  lead: "Content should build a following, not just fill a calendar.",
-  body: "We define what a brand says, where it says it, and why it matters, then build a content approach that compounds audience and trust over time instead of chasing one off moments.",
-  tagLabel: "Includes",
-  tags: ["Content Pillars", "Editorial Planning", "Channel Strategy", "Creator Partnerships", "Performance Content", "Reporting & Insights"]
 }];
 
 
@@ -265,15 +262,13 @@ function Services() {
           <div>
             <div className="eyebrow"><span className="dot"></span>02 · What we do</div>
             <h2 className="h-section" style={{ marginTop: 24 }}>
-              Three <em>distinct</em><br />services.
+              Two <em>distinct</em><br />services.
             </h2>
           </div>
           <p className="lede">
             We design tailored visibility strategies around the audiences,
             partnerships, and measurable outcomes that matter most to your
-            growth. Each of these three services stands on its own, and each
-            helps brands build familiarity, strengthen credibility, and create
-            lasting commercial opportunities.
+            growth.
           </p>
         </div>
 
@@ -286,6 +281,7 @@ function Services() {
                 {s.lead && <p className="svc-lead">{s.lead}</p>}
                 <p style={{ margin: 0 }}>{s.body}</p>
                 {s.columns &&
+                <div className="svc-reveal">
                 <div className="svc-columns">
                   {s.columns.map((c, ci) =>
                   <div className="svc-col" key={c.label}>
@@ -298,14 +294,15 @@ function Services() {
                     </ul>
                   </div>
                   )}
+                </div>
                 </div>}
                 {s.tagLabel &&
-                <>
+                <div className="svc-reveal">
                   <span className="tags-label">{s.tagLabel}</span>
                   <div className="tags">
                     {s.tags.map((t) => <span key={t} className="tag">{t}</span>)}
                   </div>
-                </>}
+                </div>}
               </div>
               <div className="arrow">↗</div>
             </article>
@@ -374,42 +371,58 @@ function Clients() {
 
 }
 
-// ─── PRINCIPLES (HOW WE THINK) ─────────────────────────────────────────────
+// ─── PROCESS ─────────────────────────────────────────────────────────────────
 const PRINCIPLES = [
-{ stmt: <>Omnichannel only works when the brand feels <em>coherent.</em></>,
-  gloss: "When product, experience, and communication do not reinforce each other, scale gets noisy instead of cumulative." },
-{ stmt: <>Strategic adjacency <em>accelerates</em> trust.</>,
-  gloss: "The right partners, contexts, and associations compress credibility and expand demand faster than standalone brand effort can." },
-{ stmt: <>Category leaders are <em>experienced,</em> not just seen.</>,
-  gloss: "Seeing is one sense. The brands that last are tasted, heard, touched, and remembered in ways that build memory and equity." },
-{ stmt: <>The goal is becoming the brand that <em>lasts.</em></>,
-  gloss: "The most valuable consumer brands are built for memory, market pull, and long-term equity that compounds over time." },
-{ stmt: <>Efficient reach is not <em>durable</em> growth.</>,
-  gloss: "Paid media captures demand, but it does not build legacy." },
-{ stmt: <>Preference is built through <em>repetition.</em></>,
-  gloss: "The strongest brands are encountered repeatedly across the moments, environments, and touchpoints that shape trust, memory, and demand." }];
+{ stmt: <><em>Discovery</em></>,
+  gloss: "We get deep on the brand, the business, and the goal, so everything that follows is built on what is actually true." },
+{ stmt: <>Strategy &amp; <em>Insight</em></>,
+  gloss: "We start with the business objective, the audience, and the cultural context, then define what the work has to accomplish." },
+{ stmt: <>Concept &amp; <em>Creative</em></>,
+  gloss: "We shape the idea, the look, and the story, and pressure test it against the outcome before anything gets built." },
+{ stmt: <>Design &amp; <em>Production</em></>,
+  gloss: "Spatial design, fabrication, vendors, and logistics, planned in detail so the build matches the concept exactly." },
+{ stmt: <>Delivery &amp; <em>Execution</em></>,
+  gloss: "On-site leadership, run of show, staffing, and guest experience, managed end to end so nothing is left to chance." },
+{ stmt: <>Amplification &amp; <em>Reach</em></>,
+  gloss: "Press, influencers, content, and channel rollout that extend the moment far beyond the room it happened in." },
+{ stmt: <>Measurement &amp; <em>Results</em></>,
+  gloss: "Reporting against the objectives we set at the start, with insight that informs the next thing we build together." }];
 
 
 function Principles() {
+  const [active, setActive] = React.useState(0);
+  const [hovered, setHovered] = React.useState(null);
+  React.useEffect(() => {
+    if (hovered !== null) return;
+    const t = setInterval(() => setActive((a) => (a + 1) % PRINCIPLES.length), 2200);
+    return () => clearInterval(t);
+  }, [hovered]);
+  const current = hovered !== null ? hovered : active;
   return (
     <section id="principles" className="section principles">
       <div className="container">
         <div className="cols-12" style={{ alignItems: "end" }}>
           <div style={{ gridColumn: "span 5" }}>
-            <div className="eyebrow"><span className="dot"></span>04 · How we think</div>
+            <div className="eyebrow"><span className="dot"></span>03 · Our process</div>
             <h2 className="h-section" style={{ marginTop: 24 }}>
-              Six things we <em>believe.</em>
+              How the work <em>gets made.</em>
             </h2>
           </div>
           <p className="lede" style={{ gridColumn: "7 / span 6", color: "rgba(242,239,231,0.72)" }}>
-            Earned by doing the work. Not arranged afterward to sound right.
+            Seven stages, start to finish. Every one of them tied back to the
+            outcome we agreed on at the beginning.
           </p>
         </div>
 
-        <div className="principles-list">
+        <div className="principles-list pipeline">
           {PRINCIPLES.map((p, i) =>
-          <div className="princ" key={i}>
-              <div className="num">P · {String(i + 1).padStart(2, "0")}</div>
+          <div
+            className={"princ" + (current === i ? " is-active" : "")}
+            key={i}
+            onMouseEnter={() => { setHovered(i); setActive(i); }}
+            onMouseLeave={() => setHovered(null)}
+          >
+              <div className="num">{String(i + 1).padStart(2, "0")}</div>
               <div>
                 <div className="stmt">{p.stmt}</div>
                 <span className="gloss">{p.gloss}</span>
@@ -530,7 +543,7 @@ function Contact() {
       <div className="container">
         <div className="grid">
           <div>
-            <div className="eyebrow"><span className="dot"></span>06 · Say hi</div>
+            <div className="eyebrow"><span className="dot"></span>04 · Say hi</div>
             <h2 className="h-section" style={{ marginTop: 24 }}>
               Tell us the <em>vibes.</em>
             </h2>
@@ -638,7 +651,7 @@ function Footer() {
             <ul>
               <li><a href="#top">About</a></li>
               <li><a href="#mandates">Who we serve</a></li>
-              <li><a href="#principles">Beliefs</a></li>
+              <li><a href="#principles">Process</a></li>
               <li><a href="careers.html">Careers</a></li>
               <li><a href="#contact">Say hi</a></li>
             </ul>
@@ -647,8 +660,7 @@ function Footer() {
             <h4>What we do</h4>
             <ul>
               <li><a href="#experiential">Experiential Marketing</a></li>
-              <li><a href="#creative-direction">Creative Direction for Campaigns</a></li>
-              <li><a href="#content-strategy">Content Strategy</a></li>
+              <li><a href="#creative-direction">Creative Campaign Direction</a></li>
             </ul>
           </div>
           <div className="col">
