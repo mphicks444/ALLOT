@@ -8,7 +8,7 @@ function CareersNav() {
     { href: "index.html#top", label: "Studio" },
     { href: "index.html#mandates", label: "Who we serve" },
     { href: "index.html#services", label: "What we do" },
-    { href: "index.html#principles", label: "Beliefs" },
+    { href: "index.html#principles", label: "Process" },
     { href: "careers.html", label: "Careers", active: true },
   ];
   return (
@@ -250,7 +250,7 @@ function CareersFooter() {
             <ul>
               <li><a href="index.html#top">About</a></li>
               <li><a href="index.html#mandates">Who we serve</a></li>
-              <li><a href="index.html#principles">Beliefs</a></li>
+              <li><a href="index.html#principles">Process</a></li>
               <li><a href="careers.html">Careers</a></li>
             </ul>
           </div>
@@ -258,8 +258,7 @@ function CareersFooter() {
             <h4>What we do</h4>
             <ul>
               <li><a href="index.html#experiential">Experiential Marketing</a></li>
-              <li><a href="index.html#creative-direction">Creative Direction for Campaigns</a></li>
-              <li><a href="index.html#content-strategy">Content Strategy</a></li>
+              <li><a href="index.html#creative-direction">Creative Campaign Direction</a></li>
             </ul>
           </div>
           <div className="col">
