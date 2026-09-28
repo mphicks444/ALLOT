@@ -43,8 +43,10 @@ function Nav({ activeSection }) {
 // ─── TICKER ────────────────────────────────────────────────────────────────
 function Ticker() {
   const items = [
+  "GTM Strategy",
+  "Digital Marketing",
+  "Event Marketing",
   "Experiential Marketing",
-  "Creative Campaign Direction",
   "Category Presence",
   "Consumer & CPG",
   "Fashion",
@@ -85,47 +87,24 @@ function MegaMarquee({ phrase, variant = "", reverse = false }) {
 // ─── HERO ──────────────────────────────────────────────────────────────────
 function Hero() {
   return (
-    <section id="top" className="hero hero-mono">
-      <div className="container">
-        <div className="hm-grid">
-          <div className="hm-mark">
-            <h1 className="monogram" aria-label="ALLOT">ALLOT</h1>
-            <div className="monogram-labels">
-              <span>ALLOT Studios</span>
-              <span>Experience Studio</span>
-            </div>
-          </div>
-
-          <nav className="hm-nav" aria-label="Statement">
-            <span style={{ fontSize: "20px", textTransform: "uppercase" }}>Most brands chase attention. We create attachment.</span>
-          </nav>
-
-          <div className="hm-statement">
-            <h2 className="hm-headline" style={{ fontSize: "42px" }}>
-              We design and produce unique brand experiences across <em>CPG, sport, and entertainment.</em>
-            </h2>
-          </div>
-
-          <div className="hm-bio">
-            <p>
-              We are a culturally connected Growth and Experiential Studio
-              fueled by vivid
-              imagination, rigorous strategy, and a refusal to be boxed in. We
-              do not play it safe, and we do not do quiet. We fuse cultural
-              insight with flawless production execution to design tactical,
-              real-world experiences that completely reshape what is next.
-            </p>
-          </div>
-
-          <div className="hm-cta">
-            <a href="#contact" className="btn btn-dark">
-              Let's vibe out <span className="arr">↗</span>
-            </a>
-          </div>
-        </div>
+    <section id="top" className="hero hc">
+      <header className="hc-top">
+        <a href="#top" className="hc-logo">Allot</a>
+        <nav className="hc-nav"><a href="#services">Services</a><a href="#principles">Process</a><a href="#contact">Contact</a></nav>
+        <a href="#contact" className="hc-menu" aria-label="Menu"><span></span><span></span><span></span></a>
+      </header>
+      <h2 className="hc-head">
+        <span className="hc-line">Experiences</span>
+        <span className="hc-line hc-row"><span className="hc-small">Designed For<br />Attachment</span><span>People</span></span>
+        <span className="hc-line">Remember<em>.</em></span>
+      </h2>
+      <h1 className="hc-mark" aria-label="ALLOT">ALLOT<sup>®</sup></h1>
+      <div className="hc-foot">
+        <span>ALLOT Studio<br />New York</span>
+        <span>Experiential Marketing<br />Event Marketing</span>
+        <span>Digital Marketing<br />GTM Strategy</span>
+        <a href="#contact" className="hc-cta">Get started <span aria-hidden="true">→</span></a>
       </div>
-
-      <span className="hm-edge">By introduction</span>
     </section>);
 
 }
@@ -172,55 +151,34 @@ const CATEGORIES = [
 function Mandates() {
   const [openCat, setOpenCat] = React.useState(null);
   return (
-    <section id="mandates" className="section categories">
+    <section id="mandates" className="section categories section--light">
       <div className="container">
-        <div className="head">
-          <div>
-            <div className="eyebrow"><span className="dot"></span>01 · Who we create for</div>
-            <h2 className="h-section" style={{ marginTop: 24 }}>
-              Built for <em>brands</em><br />with traction.
-            </h2>
-          </div>
-          <p className="lede" style={{ fontSize: 15 }}>
-          </p>
+        <div className="cats-head">
+          <h2 className="cats-title">Who we<br /><em>create for</em></h2>
+          <span className="cats-count">Three category groups</span>
         </div>
 
-        <div className="cats-layout">
-          <div className="cats">
-            {CATEGORIES.map((c, i) => (
-              <button
-                type="button"
-                className={"cat" + (openCat === i ? " is-open" : "")}
-                key={c.name}
-                aria-expanded={openCat === i}
-                onClick={() => setOpenCat(openCat === i ? null : i)}
-              >
-                <span className="num">{String(i + 1).padStart(2, "0")}</span>
-                <div>
-                  <span className="cat-name">{c.name}</span>
-                  <div className="cat-detail">
-                    <ul>
-                      {c.detail.map((d) => <li key={d}>{d}</li>)}
-                    </ul>
-                  </div>
+        <div className="cats">
+          {CATEGORIES.map((c, i) => (
+            <button
+              type="button"
+              className={"cat" + (openCat === i ? " is-open" : "")}
+              key={c.name}
+              aria-expanded={openCat === i}
+              onClick={() => setOpenCat(openCat === i ? null : i)}
+            >
+              <span className="num">{String(i + 1).padStart(2, "0")}</span>
+              <div className="cat-main">
+                <span className="cat-name">{c.name}</span>
+                <div className="cat-detail">
+                  <ul>
+                    {c.detail.map((d) => <li key={d}>{d}</li>)}
+                  </ul>
                 </div>
-                <span className="cat-toggle" aria-hidden="true">+</span>
-              </button>
-            ))}
-          </div>
-
-          <div className="field-card" aria-hidden="true">
-            <div className="stripes"></div>
-            <div className="corner"></div>
-            <div className="corner tr"></div>
-            <div className="corner bl"></div>
-            <div className="corner br"></div>
-            <div className="center-mark">A</div>
-            <div className="legend">
-              <span>Plate&nbsp;01 · Studio mark</span>
-              <span>Consumer focus</span>
-            </div>
-          </div>
+              </div>
+              <span className="cat-toggle" aria-hidden="true">+</span>
+            </button>
+          ))}
         </div>
       </div>
     </section>);
@@ -238,19 +196,35 @@ const EXPERIENTIAL_COLUMNS = [
 
 const SERVICES = [
 {
-  id: "experiential",
-  title: "Experiential Marketing",
-  lead: "Full funnel activation, delivered end to end.",
-  body: "We plan, produce, and amplify the brand moments that turn attention into commercial results, covering strategy, the experience itself, retail, and everything that keeps working after the room clears.",
-  columns: EXPERIENTIAL_COLUMNS
+  id: "gtm",
+  title: "Business Development & GTM Strategy",
+  lead: "Growth starts with knowing where to show up.",
+  body: "We map your market, audiences, and partners, then build the go-to-market plan and outreach that opens the right doors: retailers, collaborators, and accounts that move the business.",
+  tagLabel: "Includes",
+  tags: ["Go-to-Market Planning", "Market & Audience Mapping", "Partnership Outreach", "Retail & Account Pitching", "Launch Roadmaps", "Pipeline Building"]
 },
 {
-  id: "creative-direction",
-  title: "Creative Campaign Direction",
-  lead: "A campaign is only as strong as the idea holding it together.",
-  body: "We shape the creative concept, look, and voice behind a campaign, then carry it consistently across every channel and touchpoint so the brand feels considered at every size.",
+  id: "digital",
+  title: "Digital Marketing",
+  lead: "Always on, between the big moments.",
+  body: "We keep the brand visible and converting online, with content, social, and paid programs built around the same story you tell in the room.",
   tagLabel: "Includes",
-  tags: ["Campaign Concepting", "Art Direction", "Brand Voice & Messaging", "Visual Systems", "Asset Direction", "Channel Adaptation"]
+  tags: ["Social Strategy", "Content Production", "Paid Social", "Influencer Programs", "Email & CRM", "Performance Reporting"]
+},
+{
+  id: "events",
+  title: "Event Marketing",
+  lead: "The right people, in the right room.",
+  body: "From trade shows to launch dinners, we plan and run events that put your brand face to face with buyers, press, and community, and make sure every one has a follow-up.",
+  tagLabel: "Includes",
+  tags: ["Launch Events", "Trade Shows", "Press & Influencer Dinners", "Community Events", "Sponsorships", "Guest & Venue Management"]
+},
+{
+  id: "experiential",
+  title: "Experiential & Oversize Marketing",
+  lead: "Full funnel activation, delivered end to end.",
+  body: "We plan, produce, and amplify big, physical brand moments that turn attention into commercial results, covering strategy, the experience itself, retail, and everything that keeps working after the room clears.",
+  columns: EXPERIENTIAL_COLUMNS
 }];
 
 
@@ -262,7 +236,7 @@ function Services() {
           <div>
             <div className="eyebrow"><span className="dot"></span>02 · What we do</div>
             <h2 className="h-section" style={{ marginTop: 24 }}>
-              Two <em>distinct</em><br />services.
+              Four ways<br />we <em>grow</em> brands.
             </h2>
           </div>
           <p className="lede">
@@ -644,7 +618,7 @@ function Footer() {
         <div className="grid">
           <div className="col lockup">
             <span className="mark">ALLOT</span>
-            <p>Led by operators who turn the right room into a brand's most valuable channel. Proximity over impressions, every time.</p>
+            <p>Led by women who turn the right room into a brand's most valuable channel. Proximity over impressions, every time.</p>
           </div>
           <div className="col">
             <h4>Studio</h4>
@@ -659,8 +633,10 @@ function Footer() {
           <div className="col">
             <h4>What we do</h4>
             <ul>
-              <li><a href="#experiential">Experiential Marketing</a></li>
-              <li><a href="#creative-direction">Creative Campaign Direction</a></li>
+              <li><a href="#gtm">Business Development & GTM</a></li>
+              <li><a href="#digital">Digital Marketing</a></li>
+              <li><a href="#events">Event Marketing</a></li>
+              <li><a href="#experiential">Experiential & Oversize</a></li>
             </ul>
           </div>
           <div className="col">

@@ -44,17 +44,12 @@ function App() {
 
   return (
     <>
-      <Nav activeSection={activeSection} />
-      <Ticker />
       <main>
         <Hero />
         <Threshold />
-        <MegaMarquee phrase={<>Dinners · <em>Pop-ups</em> · Retail · Partnerships · Community · Press</>} />
         <Mandates />
         <Services />
-        <MegaMarquee variant="cobalt" reverse phrase={<>Proximity over <em>impressions</em> · Rooms over <em>reach</em> · Trust over <em>noise</em> ·</>} />
         <Principles />
-        <MegaMarquee variant="accent" phrase={<>The right people, in the <em>right room</em> · The right people, in the <em>right room</em> ·</>} />
         <Contact />
       </main>
       <Footer />
