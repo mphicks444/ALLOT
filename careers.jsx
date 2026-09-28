@@ -243,7 +243,7 @@ function CareersFooter() {
         <div className="grid">
           <div className="col lockup">
             <span className="mark">ALLOT</span>
-            <p>Led by operators who turn the right room into a brand's most valuable channel. Proximity over impressions, every time.</p>
+            <p>Led by women who turn the right room into a brand's most valuable channel. Proximity over impressions, every time.</p>
           </div>
           <div className="col">
             <h4>Studio</h4>
@@ -257,8 +257,10 @@ function CareersFooter() {
           <div className="col">
             <h4>What we do</h4>
             <ul>
-              <li><a href="index.html#experiential">Experiential Marketing</a></li>
-              <li><a href="index.html#creative-direction">Creative Campaign Direction</a></li>
+              <li><a href="index.html#gtm">Business Development &amp; GTM</a></li>
+              <li><a href="index.html#digital">Digital Marketing</a></li>
+              <li><a href="index.html#events">Event Marketing</a></li>
+              <li><a href="index.html#experiential">Experiential &amp; Oversize</a></li>
             </ul>
           </div>
           <div className="col">
