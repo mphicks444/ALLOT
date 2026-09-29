@@ -1,35 +1,372 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ALLOT Studios — A growth studio for DTC &amp; CPG brands</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23FF0A54'/%3E%3Ctext x='32' y='45' font-family='Oswald,Arial Narrow,Arial,sans-serif' font-weight='700' font-size='42' letter-spacing='-1' text-anchor='middle' fill='%23FBF1EE'%3EA%3C/text%3E%3C/svg%3E" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
-
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script src="image-slot.js"></script>
-<script src="cursor.js" defer></script>
-<script src="reveal.js" defer></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ALLOT Studios — Growth studio for Sports, CPG &amp; Entertainment</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23FF0A54'/%3E%3Ctext x='32' y='45' font-family='Oswald,Arial Narrow,Arial,sans-serif' font-weight='700' font-size='42' letter-spacing='-1' text-anchor='middle' fill='%23FFFFFF'%3EA%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0B0B;--bg-2:#1A1A1A;--ink:#FFFFFF;--ink-2:#C9C9C9;--ink-3:#8E8E8E;--rule:rgba(255,255,255,.16);--accent:#FF0A54;--display:"Oswald","Arial Narrow",sans-serif;--sans:"Space Grotesk","Helvetica Neue",Arial,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--pad:clamp(20px,4vw,56px);--max:1320px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--ink);text-decoration:none;transition:color .2s ease}
+a:hover{color:var(--accent)}
+::selection{background:var(--accent);color:#fff}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--pad)}
+.label{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+h1,h2,h3{font-family:var(--display);font-weight:500;margin:0;letter-spacing:-.005em;text-transform:uppercase}
+p{margin:0;text-wrap:pretty}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;background:var(--accent);color:#fff;border:0;border-radius:999px;padding:14px 22px;cursor:pointer;transition:transform .2s ease,background .2s ease}
+.btn:hover{color:#fff;transform:translateY(-2px);background:#e8084b}
+.nav{position:sticky;top:0;z-index:10;background:rgba(22,16,24,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--rule)}
+.nav .wrap{display:flex;align-items:center;justify-content:flex-end;gap:24px;height:68px}
+.logo{font-family:var(--display);font-weight:600;font-size:24px;letter-spacing:.02em}
+.nav-links{display:flex;gap:32px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.nav-links a{color:var(--ink-2)}
+.nav-links a:hover{color:var(--ink)}
+.nav .btn{padding:10px 18px}
+.hero{min-height:100vh;display:flex;flex-direction:column;padding:clamp(28px,3vw,40px) 0 clamp(56px,8vw,110px);border-bottom:1px solid var(--rule)}
+.hero>.wrap{flex:1;display:flex;flex-direction:column;width:100%}
+.hero #hero-mark{margin-top:auto!important;padding-top:48px;line-height:.88}
+.hero-top{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.hero h1{white-space:nowrap;font-size:clamp(52px,13.2vw,190px);line-height:.95;font-weight:600;letter-spacing:-.01em;pointer-events:none}
+.h1-sub{font-weight:inherit}
+.hero-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:clamp(24px,5vw,80px);margin-top:clamp(32px,4vw,56px);align-items:end}
+.hero-lede{font-size:clamp(22px,2.4vw,34px);line-height:1.25;letter-spacing:-.01em;max-width:30ch}
+.section{padding:clamp(72px,9vw,128px) 0;border-bottom:1px solid var(--rule)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:clamp(24px,5vw,80px);margin-bottom:clamp(40px,5vw,72px);align-items:end}
+.sec-head h2{font-size:clamp(44px,6vw,92px);line-height:.95}
+.sec-head .label{display:block;margin-bottom:20px}
+.sec-head p{font-size:clamp(17px,1.4vw,20px);color:var(--ink-2);max-width:48ch}
+.svc{display:grid;grid-template-columns:64px minmax(0,1fr) minmax(0,1.4fr);gap:clamp(16px,3vw,48px);padding:32px 0;border-top:1px solid var(--rule)}
+.svc:last-child{border-bottom:1px solid var(--rule)}
+.svc h3{font-size:clamp(26px,2.6vw,38px);line-height:1.05}
+.svc p{color:var(--ink-2)}
+.svc{align-items:start;transition:padding .35s ease}
+.svc>div{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .4s cubic-bezier(.2,.7,.2,1),opacity .3s ease}
+.svc>div>.reveal{overflow:hidden;min-height:0}
+.svc:hover>div,.svc:focus-within>div{grid-template-rows:1fr;opacity:1}
+.svc h3{transition:color .2s ease}
+@media(hover:none){.svc>div{grid-template-rows:1fr;opacity:1}}
+.svc .inc{margin-top:14px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--ink-3);line-height:1.8}
+.cats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+.cat{padding:28px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.cat h3{font-size:24px}
+.cat-reveal{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .4s cubic-bezier(.2,.7,.2,1),opacity .3s ease}
+.cat-reveal>p{overflow:hidden;min-height:0;padding-top:10px}
+.cat:hover .cat-reveal,.cat:focus-within .cat-reveal,.cat:focus .cat-reveal{grid-template-rows:1fr;opacity:1}
+.cats{align-items:start}
+@media(hover:none){.cat-reveal{grid-template-rows:1fr;opacity:1}}
+.cat p{color:var(--ink-2);font-size:15px}
+.about-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:clamp(24px,5vw,80px)}
+.about-body .big{font-size:clamp(24px,2.6vw,36px);line-height:1.25;letter-spacing:-.01em}
+.about-body .cols{display:grid;gap:18px;color:var(--ink-2);font-size:17px}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--rule)}
+.step{padding:32px 28px 8px 0;border-right:1px solid var(--rule)}
+.step+.step{padding-left:28px}
+.step:last-child{border-right:0}
+.step .label{display:block;margin-bottom:40px}
+.step h3{font-size:clamp(28px,2.8vw,40px);margin-bottom:14px}
+.step p{color:var(--ink-2);font-size:15px}
+.contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:clamp(32px,5vw,80px)}
+.contact-grid h2{font-size:clamp(44px,6vw,92px);line-height:.95}
+.contact-grid .intro{margin-top:24px;color:var(--ink-2);font-size:17px;max-width:38ch}
+.contact-grid .mail{display:inline-block;margin-top:28px;font-size:20px;border-bottom:1px solid var(--rule);padding-bottom:4px}
+form{display:grid;gap:22px}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}
+.field{display:grid;gap:8px}
+.field label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.field input,.field select,.field textarea{font:inherit;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--rule);padding:10px 0;border-radius:0;outline:none;width:100%;min-width:0;transition:border-color .2s ease}
+.field select option{background:var(--bg-2);color:var(--ink)}
+.field textarea{min-height:110px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--ink)}
+.submit{display:flex;align-items:center;gap:20px;margin-top:8px}
+.ok{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.contact-cta{display:grid;gap:24px;align-content:end;justify-items:start}
+.contact-cta p{color:var(--ink-2);font-size:17px;max-width:38ch}
+.inq{--bg:#FFFFFF;--bg-2:#F4F2F0;--ink:#111111;--ink-2:#3A3A3A;--ink-3:#6B6B6B;--rule:rgba(17,17,17,.14);padding:0;border:1px solid var(--rule);background:var(--bg);color:var(--ink);width:min(760px,calc(100vw - 32px));max-height:calc(100vh - 48px);border-radius:4px;overflow:hidden}
+.inq[open]{display:flex;flex-direction:column;animation:inqIn .3s cubic-bezier(.2,.7,.2,1)}
+.inq::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(6px)}
+@keyframes inqIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+#inq-form{display:flex;flex-direction:column;min-height:0;flex:1;gap:0}
+#inq-form[hidden]{display:none}
+.inq-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding:28px 32px 20px;border-bottom:1px solid var(--rule)}
+.inq-head h2{font-size:clamp(36px,4vw,52px);line-height:1;margin-top:10px}
+.inq-close{background:none;border:1px solid var(--rule);color:var(--ink);width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:14px;transition:border-color .2s ease}
+.inq-close:hover{border-color:var(--ink)}
+.inq-body{overflow-y:auto;padding:8px 32px 24px;display:grid;gap:0}
+.inq-sec{display:grid;gap:26px;padding:28px 0;border-bottom:1px solid var(--rule)}
+.inq-sec:last-child{border-bottom:0}
+.inq .field label,.q legend{font-family:var(--sans);font-size:15px;letter-spacing:0;text-transform:none;color:var(--ink);display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.qn{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--ink-3)}
+.inq em,.q em{font-style:normal;color:var(--ink-3)}
+.q{border:0;margin:0;padding:0;display:grid;gap:14px}
+.q legend{padding:0;margin-bottom:14px}
+.q small{flex-basis:100%;padding-left:28px;color:var(--ink-3);font-size:13px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{position:relative;cursor:pointer}
+.pill input{position:absolute;opacity:0;pointer-events:none}
+.pill span{display:inline-block;padding:10px 16px;border:1px solid var(--rule);border-radius:999px;font-size:14px;color:var(--ink-2);transition:border-color .15s ease,background .15s ease,color .15s ease}
+.pill:hover span{border-color:var(--ink-3);color:var(--ink)}
+.pill input:checked+span{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pill input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.bad input,.bad textarea{border-color:var(--accent)!important}
+.q.bad .pill span{border-color:rgba(255,10,84,.55)}
+.inq-foot{display:flex;justify-content:flex-end;align-items:center;gap:20px;padding:18px 32px;border-top:1px solid var(--rule);background:var(--bg)}
+.inq-err{font-size:14px;color:var(--ink-2);margin-right:auto}
+.inq-done{padding:56px 32px;display:grid;gap:16px;justify-items:start}
+.inq-done[hidden]{display:none}
+.inq-done h2{font-size:clamp(40px,5vw,64px)}
+.inq-done p{color:var(--ink-2);margin-bottom:12px}
+@media(max-width:560px){.inq-head,.inq-body,.inq-foot{padding-left:20px;padding-right:20px}.inq-foot{flex-wrap:wrap}}
+.sec-cta{display:flex;justify-content:flex-end;margin-top:clamp(32px,4vw,56px)}
+.ring{position:relative;height:340vh;border-bottom:1px solid var(--rule)}
+.ring-stage{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;place-items:center}
+.ring-items{position:absolute;inset:0}
+.ring-copy{position:relative;z-index:15;display:grid;justify-items:center;gap:18px;text-align:center;pointer-events:none;mix-blend-mode:difference;color:#fff}
+.ring-copy .label{color:#fff}
+.ring-line{font-family:var(--display);font-weight:600;text-transform:uppercase;font-size:clamp(56px,9vw,150px);line-height:.86}
+.ring-cap{position:absolute;z-index:40!important;left:50%;bottom:clamp(24px,5vh,56px);transform:translateX(-50%);font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);z-index:21;transition:opacity .3s ease}
+.ring-item{position:absolute;left:50%;top:50%;width:var(--s);margin:0;overflow:hidden;opacity:0;transition:opacity .8s ease}
+.ring.on .ring-item{opacity:1}
+.ring-item img{width:100%;height:auto;display:block}
+@media(prefers-reduced-motion:reduce){.ring{height:auto}.ring-stage{position:relative;height:auto;padding:80px var(--pad);display:grid;gap:40px}.ring-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}.ring-item{position:relative;left:auto;top:auto;margin:0;width:auto;transform:none!important;opacity:1}}
+.introov{position:fixed;inset:0;z-index:1000;background:#000;display:grid;place-items:center;overflow:hidden}
+.introov.gone{display:none}
+.intro-tv{position:relative;width:min(96vw,150vh);aspect-ratio:510/339;transform-origin:50% 50%}
+.intro-tv img,.intro-tv canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;display:block}
+.intro-tv img.on,.intro-tv canvas.on{opacity:1}
+.intro-tv canvas{image-rendering:pixelated;filter:contrast(1.4)}
+.intro-flash{position:absolute;inset:-50vmax;background:#fff;opacity:0;pointer-events:none}
+.intro-skip{position:absolute;right:24px;bottom:24px;background:none;border:1px solid rgba(255,255,255,.3);color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:10px 16px;border-radius:999px;cursor:pointer;transition:border-color .2s ease}
+.intro-skip:hover{border-color:#fff}
+body.intro-lock{overflow:hidden}
+.footer{padding:36px 0}
+.footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.footer a{color:var(--ink-3)}
+.footer a:hover{color:var(--ink)}
+@media(max-width:900px){.cats{grid-template-columns:1fr!important}.nav-links{display:none}.hero-row,.sec-head,.about-body,.contact-grid{grid-template-columns:1fr}.svc{grid-template-columns:40px minmax(0,1fr)}.svc>div:last-child{grid-column:2}.cats{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.step,.step+.step{padding:28px 20px 20px 0;border-right:0;border-bottom:1px solid var(--rule)}}
+@media(max-width:560px){.cats,.steps,.row2{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-<div id="root"></div>
+<div id="intro" class="introov" aria-hidden="true">
+<div class="intro-tv" id="intro-tv">
+<img src="images/intro-1.png" alt="" data-f="1"><img src="images/intro-2.png" alt="" data-f="2"><img src="images/intro-3.png" alt="" data-f="3"><img src="images/intro-4.png" alt="" data-f="4"><img src="images/intro-5.png" alt="" data-f="5"><img src="images/intro-6.png" alt="" data-f="6">
+<canvas id="intro-static" width="200" height="133"></canvas>
+<div class="intro-flash"></div>
+</div>
+<button type="button" class="intro-skip" id="intro-skip">Skip</button>
+</div>
+<script>
+(function(){
+var el=document.getElementById('intro'),tv=document.getElementById('intro-tv'),imgs=[].slice.call(tv.querySelectorAll('img')),cv=document.getElementById('intro-static'),cx=cv.getContext('2d'),fl=tv.querySelector('.intro-flash'),done=false,raf;
+var force=/[?&]intro/.test(location.search);
+function finish(){if(done)return;done=true;cancelAnimationFrame(raf);el.classList.add('gone');document.body.classList.remove('intro-lock');window.__introDone=true;dispatchEvent(new Event('intro:done'));}
+if((!force&&sessionStorage.getItem('allot-intro'))||matchMedia('(prefers-reduced-motion: reduce)').matches){finish();return;}
+try{sessionStorage.setItem('allot-intro','1')}catch(e){}
+document.body.classList.add('intro-lock');window.scrollTo(0,0);
+document.getElementById('intro-skip').addEventListener('click',function(){el.animate([{opacity:1},{opacity:0}],{duration:300}).onfinish=finish;});
+function show(n){imgs.forEach(function(i){i.style.opacity='';i.classList.toggle('on',+i.dataset.f===n)});cv.classList.toggle('on',n===0);}
+var noiseOn=false,tint=0;function noise(){if(!noiseOn)return;var w=cv.width,hh=cv.height,d=cx.createImageData(w,hh),p=d.data;for(var y=0;y<hh;y++){var band=Math.random()<.08?1.6:1,off=(Math.random()*30)|0;for(var x=0;x<w;x++){var v=Math.random()*255*band;v=v>255?255:v;var k=(y*w+x)*4;p[k]=v;p[k+1]=v*(1-tint*.15);p[k+2]=v*(1-tint*.3);p[k+3]=255;}}cx.putImageData(d,0,0);raf=requestAnimationFrame(noise);}
+var I=function(n){return imgs[n-1]};
+function fade(n,ms){I(n).animate([{opacity:0},{opacity:1}],{duration:ms,fill:'forwards'});}
+function drive(n,o,s0,s1,ms,ease){var e=I(n);e.style.transformOrigin=o;return e.animate([{transform:'scale('+s0+') translateY(0)'},{transform:'scale('+((s0+s1)/2)+') translateY(-2px)',offset:.5},{transform:'scale('+s1+') translateY(0)'}],{duration:ms,easing:ease,fill:'forwards'});}
+var T=[
+[0,function(){imgs.forEach(function(i){i.style.opacity=0});I(1).style.opacity=1;drive(1,'44% 76%',1,1.55,1500,'cubic-bezier(.45,0,.9,.6)');tv.animate([{transform:'translate(0,0)'},{transform:'translate(0,1.5px)'},{transform:'translate(0,-1px)'},{transform:'translate(0,1px)'},{transform:'translate(0,0)'}],{duration:500,iterations:4});}],
+[1050,function(){drive(2,'50% 68%',1.05,1.45,900,'cubic-bezier(.5,0,1,.7)');fade(2,380);}],
+[1700,function(){drive(3,'50% 55%',1.1,1.75,560,'cubic-bezier(.7,0,1,1)');fade(3,200);}],
+[2250,function(){imgs.forEach(function(i){i.getAnimations().forEach(function(an){an.cancel()});i.style.opacity=0;i.style.transform=''});show(4);fl.animate([{opacity:1},{opacity:0}],{duration:300,easing:'ease-out'});tv.animate([{transform:'scale(1.14) translate(0,0)'},{transform:'scale(1.14) translate(-18px,11px)'},{transform:'scale(1.11) translate(14px,-9px)'},{transform:'scale(1.08) translate(-7px,5px)'},{transform:'scale(1.06) translate(3px,-2px)'},{transform:'scale(1.05) translate(0,0)'}],{duration:460,fill:'forwards'});}],
+[2600,function(){show(5);tv.animate([{transform:'scale(1.05)'},{transform:'scale(1.08)'}],{duration:450,fill:'forwards'});}],
+[3000,function(){show(6);}],
+[3220,function(){show(0);noiseOn=true;noise();}],
+[3750,function(){tv.animate([{transform:'scale(1,1)',filter:'brightness(1)'},{transform:'scale(1.02,.012)',filter:'brightness(3)',offset:.55},{transform:'scale(.002,.004)',filter:'brightness(4)'}],{duration:420,easing:'cubic-bezier(.7,0,.3,1)',fill:'forwards'});}],
+[4200,function(){noiseOn=false;el.animate([{opacity:1},{opacity:0}],{duration:350,fill:'forwards'}).onfinish=finish;}]];
+var loaded=0;function go(){T.forEach(function(t){setTimeout(function(){if(!done)t[1]()},t[0])});}
+imgs.forEach(function(i){if(i.complete)loaded++;else i.onload=i.onerror=function(){if(++loaded===imgs.length)go()}});if(loaded===imgs.length)go();
+setTimeout(function(){if(!done&&loaded<imgs.length){loaded=imgs.length;go();}},4000);
+})();
+</script>
+<main>
+<section id="top" class="hero" data-screen-label="Hero">
+<div class="wrap">
+<div class="hero-top"><span class="label">Growth studio</span><button type="button" class="btn" data-inquiry>Get in touch</button></div>
+<h1 id="hero-mark" style="margin-top:40px">ALLOT <span class="h1-sub">Studios</span></h1>
+<div class="hero-row">
+<span class="label">Sports · CPG · Entertainment</span>
+<p class="hero-lede">We help sports, CPG, and entertainment brands grow through strategy, events, experiences, and digital, built around the people who matter most to their growth.</p>
+</div>
+</div>
+</section>
+<section id="moments" class="ring" data-screen-label="Moments">
+<div class="ring-stage">
+<div class="ring-items">
+<div class="ring-item" data-cap="Pop-up"><img src="images/moment-01.jpeg" alt="Pop-up" loading="eager"></div>
+<div class="ring-item" data-cap="Immersive dinner"><img src="images/moment-09.jpeg" alt="Immersive dinner" loading="eager"></div>
+<div class="ring-item" data-cap="Oversize"><img src="images/moment-05.jpeg" alt="Oversize" loading="eager"></div>
+<div class="ring-item" data-cap="Activation"><img src="images/moment-02.jpeg" alt="Activation" loading="eager"></div>
+<div class="ring-item" data-cap="Brand game"><img src="images/moment-03.jpeg" alt="Brand game" loading="eager"></div>
+<div class="ring-item" data-cap="Retail"><img src="images/moment-04.jpeg" alt="Retail" loading="eager"></div>
+<div class="ring-item" data-cap="Festival"><img src="images/moment-06.jpeg" alt="Festival" loading="eager"></div>
+<div class="ring-item" data-cap="Private dinner"><img src="images/moment-08.jpeg" alt="Private dinner" loading="eager"></div>
+<div class="ring-item" data-cap="Installation"><img src="images/moment-10.jpeg" alt="Installation" loading="eager"></div>
+<div class="ring-item" data-cap="Salon dinner"><img src="images/moment-07.jpeg" alt="Salon dinner" loading="eager"></div>
+</div>
+<div class="ring-copy"><span class="label">The moments we're built for</span><p class="ring-line">Not seen.<br>Felt.</p></div>
+<span class="ring-cap" id="ring-cap"></span>
+</div>
+</section>
+<section id="services" class="section" data-screen-label="What we do">
+<div class="wrap">
+<div class="sec-head">
+<div><span class="label">01 · What we do</span><h2>What we do</h2></div>
+<p>Four services, planned together so every move reinforces the last.</p>
+</div>
+<div class="svc-list">
+<article class="svc" tabindex="0"><span class="label">01</span><h3>Business Development &amp; GTM Strategy</h3><div><div class="reveal"><p>We map your market, audiences, and partners, then build the go-to-market plan and outreach that opens the right doors.</p><p class="inc">GTM planning · Partnerships · Outreach · Retail &amp; account pitching</p></div></div></article>
+<article class="svc" tabindex="0"><span class="label">02</span><h3>Digital Marketing</h3><div><div class="reveal"><p>Always-on content, social, paid, and influencer programs that keep the brand visible and converting between the big moments.</p><p class="inc">Social · Content · Paid · Influencer · Email &amp; CRM</p></div></div></article>
+<article class="svc" tabindex="0"><span class="label">03</span><h3>Event Marketing</h3><div><div class="reveal"><p>Launches, dinners, and trade moments that put the brand face to face with buyers, press, and community, with a follow-up built in.</p><p class="inc">Launches · Private dinners · Trade shows · Sponsorships</p></div></div></article>
+<article class="svc" tabindex="0"><span class="label">04</span><h3>Experiential &amp; Oversize Marketing</h3><div><div class="reveal"><p>Big, physical brand moments that move a brand from being seen to being felt, at a scale the market can't walk past.</p><p class="inc">Pop-ups · Installations · Brand environments · Oversize builds</p></div></div></article>
+</div>
+<div class="sec-cta"><button type="button" class="btn" data-inquiry>Start a project <span aria-hidden="true">↗</span></button></div>
+</div>
+</section>
+<section id="who" class="section" data-screen-label="Who we help">
+<div class="wrap">
+<div class="sec-head">
+<div><span class="label">02 · Who we help</span><h2>Sports, CPG &amp; Entertainment</h2></div>
+<p>Brands where fans, shoppers, and audiences decide the next stage of growth, and real-world presence, partnerships, and visibility make the difference.</p>
+</div>
+<div class="cats">
+<div class="cat" tabindex="0"><h3>Sports</h3><div class="cat-reveal"><p>Teams, leagues, athletes, and performance brands.</p></div></div>
+<div class="cat" tabindex="0"><h3>CPG</h3><div class="cat-reveal"><p>Food, beverage, beauty, wellness, and everyday consumer goods.</p></div></div>
+<div class="cat" tabindex="0"><h3>Entertainment</h3><div class="cat-reveal"><p>Music, film, TV, gaming, and live experiences.</p></div></div>
+</div>
+<div class="sec-cta"><button type="button" class="btn" data-inquiry>Work with us <span aria-hidden="true">↗</span></button></div>
+</div>
+</section>
+<section id="process" class="section" data-screen-label="Process">
+<div class="wrap">
+<div class="sec-head">
+<div><span class="label">03 · How we work</span><h2>How we work</h2></div>
+<p>One clear path from first call to measurable results.</p>
+</div>
+<div class="steps">
+<div class="step"><span class="label">Step 01</span><h3>Listen</h3><p>We learn the brand, the numbers, the audience, and what's in the way.</p></div>
+<div class="step"><span class="label">Step 02</span><h3>Plan</h3><p>We define where to show up, around whom, and in what order.</p></div>
+<div class="step"><span class="label">Step 03</span><h3>Make</h3><p>We produce the events, experiences, digital, and outreach end to end.</p></div>
+<div class="step"><span class="label">Step 04</span><h3>Measure</h3><p>We report what moved and use it to shape the next move.</p></div>
+</div>
+<div class="sec-cta"><button type="button" class="btn" data-inquiry>Get in touch <span aria-hidden="true">↗</span></button></div>
+</div>
+</section>
+<section id="contact" class="section" data-screen-label="Contact">
+<div class="wrap contact-grid">
+<div>
+<span class="label">04 · Contact</span>
+<h2 style="margin-top:20px">Tell us what you're building</h2>
+<p class="intro">A few sentences is enough. We reply within the week.</p>
+<a class="mail" href="mailto:hi@weareallot.com">hi@weareallot.com</a>
+</div>
+<div class="contact-cta"><p>Twelve quick questions so we come to the first call prepared.</p><button type="button" class="btn" data-inquiry>Start an inquiry <span aria-hidden="true">↗</span></button></div>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="wrap"><span>© 2026 ALLOT Studios</span><a href="mailto:hi@weareallot.com">hi@weareallot.com</a></div>
+</footer>
+<dialog id="inquiry" class="inq" aria-labelledby="inq-title">
+<form id="inq-form" novalidate>
+<div class="inq-head"><div><span class="label">ALLOT Studios</span><h2 id="inq-title">Inquiry</h2></div><button type="button" class="inq-close" aria-label="Close" data-close>✕</button></div>
+<div class="inq-body">
+<section class="inq-sec"><span class="label">Contact</span>
+<div class="row2"><div class="field"><label for="i-name"><span class="qn">01</span>First &amp; Last Name <em>*</em></label><input id="i-name" name="i-name" type="text" required></div><div class="field"><label for="i-email"><span class="qn">02</span>Work Email <em>*</em></label><input id="i-email" name="i-email" type="email" required></div></div>
+<div class="row2"><div class="field"><label for="i-phone"><span class="qn">03</span>Phone Number</label><input id="i-phone" name="i-phone" type="tel"></div><div class="field"><label for="i-company"><span class="qn">04</span>Company / Brand <em>*</em></label><input id="i-company" name="i-company" type="text" required></div></div>
+<div class="field"><label for="i-web"><span class="qn">05</span>Website / Instagram <em>*</em></label><input id="i-web" name="i-web" type="text" required placeholder="yourbrand.com or @handle"></div>
+</section>
+<section class="inq-sec"><span class="label">About the company</span>
+<fieldset class="q"><legend><span class="qn">06</span>What best describes your company? <em>*</em></legend><div class="pills"><label class="pill"><input type="radio" name="type" value="Consumer Brand / CPG" required><span>Consumer Brand / CPG</span></label><label class="pill"><input type="radio" name="type" value="Sports"><span>Sports</span></label><label class="pill"><input type="radio" name="type" value="Entertainment / Media"><span>Entertainment / Media</span></label><label class="pill"><input type="radio" name="type" value="Hospitality"><span>Hospitality</span></label><label class="pill"><input type="radio" name="type" value="Beauty / Wellness"><span>Beauty / Wellness</span></label><label class="pill"><input type="radio" name="type" value="Food &amp; Beverage"><span>Food &amp; Beverage</span></label><label class="pill"><input type="radio" name="type" value="Fashion / Lifestyle"><span>Fashion / Lifestyle</span></label><label class="pill"><input type="radio" name="type" value="Other"><span>Other</span></label></div></fieldset>
+<fieldset class="q"><legend><span class="qn">07</span>What are you looking for help with? <em>*</em><small>Select all that apply.</small></legend><div class="pills"><label class="pill"><input type="checkbox" name="help" value="Experiential Marketing"><span>Experiential Marketing</span></label><label class="pill"><input type="checkbox" name="help" value="Pop-Ups &amp; Brand Activations"><span>Pop-Ups &amp; Brand Activations</span></label><label class="pill"><input type="checkbox" name="help" value="Events &amp; Experiences"><span>Events &amp; Experiences</span></label><label class="pill"><input type="checkbox" name="help" value="Creative Marketing / Brand Stunts"><span>Creative Marketing / Brand Stunts</span></label><label class="pill"><input type="checkbox" name="help" value="Digital Advertising"><span>Digital Advertising</span></label><label class="pill"><input type="checkbox" name="help" value="AI Commercials &amp; Creative"><span>AI Commercials &amp; Creative</span></label><label class="pill"><input type="checkbox" name="help" value="Business Development"><span>Business Development</span></label><label class="pill"><input type="checkbox" name="help" value="Product / Brand Launch"><span>Product / Brand Launch</span></label><label class="pill"><input type="checkbox" name="help" value="Not Sure Yet"><span>Not Sure Yet</span></label></div></fieldset>
+<fieldset class="q"><legend><span class="qn">08</span>What are you looking to accomplish? <em>*</em></legend><div class="pills"><label class="pill"><input type="radio" name="goal" value="Increase brand awareness" required><span>Increase brand awareness</span></label><label class="pill"><input type="radio" name="goal" value="Drive sales / customer acquisition"><span>Drive sales / customer acquisition</span></label><label class="pill"><input type="radio" name="goal" value="Launch a product or campaign"><span>Launch a product or campaign</span></label><label class="pill"><input type="radio" name="goal" value="Create an IRL brand moment"><span>Create an IRL brand moment</span></label><label class="pill"><input type="radio" name="goal" value="Reach a new audience"><span>Reach a new audience</span></label><label class="pill"><input type="radio" name="goal" value="Generate leads / business opportunities"><span>Generate leads / business opportunities</span></label><label class="pill"><input type="radio" name="goal" value="Grow our digital presence"><span>Grow our digital presence</span></label><label class="pill"><input type="radio" name="goal" value="Something else"><span>Something else</span></label></div></fieldset>
+</section>
+<section class="inq-sec"><span class="label">Project</span>
+<div class="field"><label for="i-msg"><span class="qn">09</span>Tell us a little about what you have in mind. <em>*</em></label><textarea id="i-msg" name="i-msg" required></textarea></div>
+<fieldset class="q"><legend><span class="qn">10</span>When would you like to launch? <em>*</em></legend><div class="pills"><label class="pill"><input type="radio" name="timing" value="ASAP" required><span>ASAP</span></label><label class="pill"><input type="radio" name="timing" value="Within 30 days"><span>Within 30 days</span></label><label class="pill"><input type="radio" name="timing" value="1–3 months"><span>1–3 months</span></label><label class="pill"><input type="radio" name="timing" value="3–6 months"><span>3–6 months</span></label><label class="pill"><input type="radio" name="timing" value="6+ months"><span>6+ months</span></label><label class="pill"><input type="radio" name="timing" value="Still exploring"><span>Still exploring</span></label></div></fieldset>
+<fieldset class="q"><legend><span class="qn">11</span>What budget have you allocated? <em>*</em></legend><div class="pills"><label class="pill"><input type="radio" name="budget" value="Under $10K" required><span>Under $10K</span></label><label class="pill"><input type="radio" name="budget" value="$10K–$25K"><span>$10K–$25K</span></label><label class="pill"><input type="radio" name="budget" value="$25K–$50K"><span>$25K–$50K</span></label><label class="pill"><input type="radio" name="budget" value="$50K–$100K"><span>$50K–$100K</span></label><label class="pill"><input type="radio" name="budget" value="$100K+"><span>$100K+</span></label><label class="pill"><input type="radio" name="budget" value="Not sure yet"><span>Not sure yet</span></label></div></fieldset>
+<fieldset class="q"><legend><span class="qn">12</span>How did you hear about Allot?</legend><div class="pills"><label class="pill"><input type="radio" name="source" value="Referral"><span>Referral</span></label><label class="pill"><input type="radio" name="source" value="Instagram"><span>Instagram</span></label><label class="pill"><input type="radio" name="source" value="LinkedIn"><span>LinkedIn</span></label><label class="pill"><input type="radio" name="source" value="Event"><span>Event</span></label><label class="pill"><input type="radio" name="source" value="Google / Search"><span>Google / Search</span></label><label class="pill"><input type="radio" name="source" value="Other"><span>Other</span></label></div></fieldset>
+</section>
+</div>
+<div class="inq-foot"><span class="inq-err" id="inq-err" role="alert"></span><button type="submit" class="btn">Submit Inquiry <span aria-hidden="true">↗</span></button></div>
+</form>
+<div class="inq-done" id="inq-done" hidden><span class="label">Received</span><h2>Thank you.</h2><p>We'll be in touch within the week.</p><button type="button" class="btn" data-close>Close</button></div>
+</dialog>
+<script>
+(function(){var m=document.getElementById("hero-mark");function fit(){var p=m.parentElement,cs=getComputedStyle(p),g=Math.max(12,Math.min(24,innerWidth*.015)),vw=document.documentElement.clientWidth,w=vw-2*g,cl=p.getBoundingClientRect().left+parseFloat(cs.paddingLeft);m.style.marginLeft=(g-cl)+"px";m.style.marginRight=(g-cl)+"px";m.style.width="max-content";m.style.alignSelf="flex-start";m.style.fontSize="100px";var tw=m.getBoundingClientRect().width;m.style.width="";m.style.alignSelf="";var fs=100*w/tw*0.99,k=1.9;m.style.fontSize=fs+"px";m.style.transform="scaleY("+k+")";m.style.transformOrigin="left bottom";m.style.paddingTop=(48+fs*.88*(k-1))+"px";}var played=false;function band(){if(played||matchMedia("(prefers-reduced-motion: reduce)").matches)return;played=true;var k=1.9,s=function(x,y){return "scale("+x+","+y+")"};m.animate([{transform:s(1,.08),offset:0},{transform:s(.96,k*1.28),offset:.32},{transform:s(1.03,k*.86),offset:.5},{transform:s(.99,k*1.08),offset:.66},{transform:s(1.01,k*.97),offset:.8},{transform:s(1,k*1.01),offset:.9},{transform:s(1,k),offset:1}],{duration:1400,easing:"cubic-bezier(.3,.6,.35,1)"});}m.style.visibility="hidden";fit();window.addEventListener("resize",fit);(document.fonts?document.fonts.ready:Promise.resolve()).then(function(){fit();m.style.visibility="";if(window.__introDone)band();else addEventListener("intro:done",band,{once:true});});})();
+(function(){
+var d=document.getElementById('inquiry'),f=document.getElementById('inq-form'),done=document.getElementById('inq-done'),err=document.getElementById('inq-err');
+function open(){f.hidden=false;done.hidden=true;err.textContent='';d.showModal();document.body.style.overflow='hidden';}
+function close(){d.close();}
+d.addEventListener('close',function(){document.body.style.overflow='';});
+document.querySelectorAll('[data-inquiry]').forEach(function(b){b.addEventListener('click',open)});
+d.addEventListener('click',function(e){if(e.target===d||e.target.closest('[data-close]'))close();});
+f.addEventListener('submit',function(e){
+e.preventDefault();f.querySelectorAll('.bad').forEach(function(x){x.classList.remove('bad')});
+var bad=[];
+f.querySelectorAll('input[required]:not([type=radio]),textarea[required]').forEach(function(i){if(!i.checkValidity())bad.push(i.closest('.field'));});
+['type','goal','timing','budget'].forEach(function(n){if(!f.querySelector('input[name="'+n+'"]:checked'))bad.push(f.querySelector('input[name="'+n+'"]').closest('.q'));});
+if(!f.querySelector('input[name="help"]:checked'))bad.push(f.querySelector('input[name="help"]').closest('.q'));
+if(bad.length){bad.forEach(function(x){x.classList.add('bad')});err.textContent='Please complete the highlighted fields.';var b=d.querySelector('.inq-body');b.scrollTo({top:bad[0].offsetTop-b.offsetTop-20,behavior:'smooth'});return;}
 
-<template id="__bundler_thumbnail" data-bg-color="#161018">
-  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
-    <rect width="1200" height="800" fill="#161018"/>
-    <text x="600" y="470" font-family="Oswald, Arial Narrow, sans-serif" font-weight="700" font-size="320" letter-spacing="-8" text-anchor="middle" fill="#FF0A54">ALLOT</text>
-    <rect x="470" y="540" width="260" height="10" fill="#A8FF1F"/>
-  </svg>
-</template>
+var fv=function(id){var el=f.querySelector('#'+id);return el?el.value.trim():'';};
+var val=function(n){var el=f.querySelector('[name="'+n+'"]:checked');return el?el.value:'';};
+var checked=function(n){return [].slice.call(f.querySelectorAll('[name="'+n+'"]:checked')).map(function(el){return el.value});};
 
-<script type="text/babel" src="tweaks-panel.jsx"></script>
-<script type="text/babel" src="sections.jsx"></script>
-<script type="text/babel" src="app.jsx"></script>
+var name=fv('i-name'),email=fv('i-email'),phone=fv('i-phone'),company=fv('i-company'),web=fv('i-web'),msg=fv('i-msg');
+var type=val('type'),goal=val('goal'),timing=val('timing'),budget=val('budget'),source=val('source');
+var help=checked('help');
+
+var message=msg
++'\n\nCompany type: '+(type||'—')
++'\nLooking for help with: '+(help.length?help.join(', '):'—')
++'\nLaunch timing: '+(timing||'—')
++'\nWebsite/Instagram: '+(web||'—')
++'\nPhone: '+(phone||'—')
++'\nHeard about us via: '+(source||'—');
+
+var submitBtn=f.querySelector('button[type=submit]'),origLabel=submitBtn.innerHTML;
+submitBtn.disabled=true;submitBtn.innerHTML='Sending…';err.textContent='';
+
+fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,email:email,company:company,budget:budget,intent:goal,message:message})})
+.then(function(r){return r.json().catch(function(){return null}).then(function(j){return {ok:r.ok,body:j}})})
+.then(function(res){
+submitBtn.disabled=false;submitBtn.innerHTML=origLabel;
+if(!res.ok||!res.body||!res.body.ok){err.textContent=(res.body&&res.body.error)||'Something went wrong. Please try again or email hi@weareallot.com.';return;}
+f.reset();f.hidden=true;done.hidden=false;
+})
+.catch(function(){
+submitBtn.disabled=false;submitBtn.innerHTML=origLabel;
+err.textContent='Something went wrong. Please try again or email hi@weareallot.com.';
+});
+});
+f.addEventListener('change',function(e){var c=e.target.closest('.bad');if(c)c.classList.remove('bad');});
+f.addEventListener('input',function(e){var c=e.target.closest('.bad');if(c)c.classList.remove('bad');});
+})();
+</script>
+<script>
+(function(){var sec=document.getElementById('moments'),its=[].slice.call(sec.querySelectorAll('.ring-item')),cap=document.getElementById('ring-cap'),copy=sec.querySelector('.ring-copy'),n=its.length,tick=false;
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){sec.classList.add('on');return;}
+new IntersectionObserver(function(es){if(es[0].isIntersecting)sec.classList.add('on')},{threshold:.05}).observe(sec);
+function upd(){tick=false;var r=sec.getBoundingClientRect(),vh=innerHeight,vw=innerWidth;var p=Math.min(1,Math.max(0,-r.top/(r.height-vh)));
+var m=Math.min(vw,vh),base=Math.max(56,Math.min(m*.13,vw*.14)),R=1,g=36,cw=copy.getBoundingClientRect(),Rx=Math.max(cw.width/2+base*.55,Math.min(vw/2-base*.75-g,vw*.42)),Ry=Math.max(cw.height/2+base*.5,vh/2-base*.85-g),rot=-p*540,best=0,bi=0;
+its.forEach(function(el,i){var a=(i/n*360+rot)%360;if(a<0)a+=360;var d=Math.abs(((a+540)%360)-180);var f=Math.max(0,1-d/34);f=f*f*(3-2*f);var im=el.firstElementChild,ar=(im.naturalWidth/im.naturalHeight)||1.4,tw=Math.min(vw*(vw<700?.86:.56),vh*.68*ar),s=1+f*(tw/base-1);var rad=a*Math.PI/180;var x=Math.cos(rad)*Rx*(1-f),y=Math.sin(rad)*Ry*(1-f);
+el.style.setProperty('--s',(base*s).toFixed(1)+'px');el.style.transform='translate3d(-50%,-50%,0) translate3d('+x.toFixed(1)+'px,'+y.toFixed(1)+'px,0) rotate('+(Math.sin(rad)*6).toFixed(2)+'deg)';el.style.zIndex=10+Math.round(f*20);if(f>best){best=f;bi=i}});
+copy.style.opacity=(1-best*.9).toFixed(2);cap.textContent=best>.5?its[bi].dataset.cap:'';cap.style.opacity=best>.5?1:0;}
+addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(upd)}},{passive:true});addEventListener('resize',upd);upd();
+})();
+</script>
 </body>
 </html>
