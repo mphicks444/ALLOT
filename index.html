@@ -89,7 +89,8 @@ form{display:grid;gap:22px}
 .contact-cta{display:grid;gap:24px;align-content:end;justify-items:start}
 .contact-cta p{color:var(--ink-2);font-size:17px;max-width:38ch}
 .inq{--bg:#FFFFFF;--bg-2:#F4F2F0;--ink:#111111;--ink-2:#3A3A3A;--ink-3:#6B6B6B;--rule:rgba(17,17,17,.14);padding:0;border:1px solid var(--rule);background:var(--bg);color:var(--ink);width:min(760px,calc(100vw - 32px));max-height:calc(100vh - 48px);border-radius:4px;overflow:hidden}
-.inq[open]{display:flex;flex-direction:column;animation:inqIn .3s cubic-bezier(.2,.7,.2,1)}
+.inq[open]{animation:inqIn .3s cubic-bezier(.2,.7,.2,1)}
+.inq-flex{display:flex;flex-direction:column;height:100%;min-height:0}
 .inq::backdrop{background:rgba(0,0,0,.7);backdrop-filter:blur(6px)}
 @keyframes inqIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 #inq-form{display:flex;flex-direction:column;min-height:0;flex:1;gap:0}
@@ -280,6 +281,7 @@ setTimeout(function(){if(!done&&loaded<imgs.length){loaded=imgs.length;go();}},4
 <div class="wrap"><span>© 2026 ALLOT Studios</span><a href="mailto:hi@weareallot.com">hi@weareallot.com</a></div>
 </footer>
 <dialog id="inquiry" class="inq" aria-labelledby="inq-title">
+<div class="inq-flex">
 <form id="inq-form" novalidate>
 <div class="inq-head"><div><span class="label">ALLOT Studios</span><h2 id="inq-title">Inquiry</h2></div><button type="button" class="inq-close" aria-label="Close" data-close>✕</button></div>
 <div class="inq-body">
@@ -303,6 +305,7 @@ setTimeout(function(){if(!done&&loaded<imgs.length){loaded=imgs.length;go();}},4
 <div class="inq-foot"><span class="inq-err" id="inq-err" role="alert"></span><button type="submit" class="btn">Submit Inquiry <span aria-hidden="true">↗</span></button></div>
 </form>
 <div class="inq-done" id="inq-done" hidden><span class="label">Received</span><h2>Thank you.</h2><p>We'll be in touch within the week.</p><button type="button" class="btn" data-close>Close</button></div>
+</div>
 </dialog>
 <script>
 (function(){var m=document.getElementById("hero-mark");function fit(){var p=m.parentElement,cs=getComputedStyle(p),g=Math.max(12,Math.min(24,innerWidth*.015)),vw=document.documentElement.clientWidth,w=vw-2*g,cl=p.getBoundingClientRect().left+parseFloat(cs.paddingLeft);m.style.marginLeft=(g-cl)+"px";m.style.marginRight=(g-cl)+"px";m.style.width="max-content";m.style.alignSelf="flex-start";m.style.fontSize="100px";var tw=m.getBoundingClientRect().width;m.style.width="";m.style.alignSelf="";var fs=100*w/tw*0.99,k=1.9;m.style.fontSize=fs+"px";m.style.transform="scaleY("+k+")";m.style.transformOrigin="left bottom";m.style.paddingTop=(48+fs*.88*(k-1))+"px";}var played=false;function band(){if(played||matchMedia("(prefers-reduced-motion: reduce)").matches)return;played=true;var k=1.9,s=function(x,y){return "scale("+x+","+y+")"};m.animate([{transform:s(1,.08),offset:0},{transform:s(.96,k*1.28),offset:.32},{transform:s(1.03,k*.86),offset:.5},{transform:s(.99,k*1.08),offset:.66},{transform:s(1.01,k*.97),offset:.8},{transform:s(1,k*1.01),offset:.9},{transform:s(1,k),offset:1}],{duration:1400,easing:"cubic-bezier(.3,.6,.35,1)"});}m.style.visibility="hidden";fit();window.addEventListener("resize",fit);(document.fonts?document.fonts.ready:Promise.resolve()).then(function(){fit();m.style.visibility="";if(window.__introDone)band();else addEventListener("intro:done",band,{once:true});});})();
